@@ -90,30 +90,30 @@
 
 
 
-<meta name="description" content="IOS应用安全-HTTP/HTTPS网络安全(一)&amp;gt;导读：  本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接">
+<meta name="description" content="IOS应用安全-HTTP/HTTPS网络安全(一) 导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接触到的知">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IOS应用安全-HTTP&#x2F;HTTPS网络安全(一)">
 <meta property="og:url" content="https://dishibolei.github.io/2017/05/11/IOS应用安全-HTTP-HTTPS网络安全-一/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="IOS应用安全-HTTP/HTTPS网络安全(一)&amp;gt;导读：  本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_header_struct.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_header1.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_response_struct.jpg">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_https_protocol.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_https_message.jpg">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_https_cer.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_ssl_chain.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_https_fake.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/charles_1.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/charles_2.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/charles_3.png">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/charles_4.jpg">
-<meta property="og:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/charles_5.jpg">
-<meta property="og:updated_time" content="2017-05-11T07:32:24.000Z">
+<meta property="og:description" content="IOS应用安全-HTTP/HTTPS网络安全(一) 导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接触到的知">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_header_struct.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_header1.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_response_struct.jpg">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_https_protocol.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_https_message.jpg">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_https_cer.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_ssl_chain.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_https_fake.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/charles_1.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/charles_2.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/charles_3.png">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/charles_4.jpg">
+<meta property="og:image" content="https://github.com/dishibolei/img/blob/master/safe/http/charles_5.jpg">
+<meta property="og:updated_time" content="2017-05-11T08:02:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IOS应用安全-HTTP&#x2F;HTTPS网络安全(一)">
-<meta name="twitter:description" content="IOS应用安全-HTTP/HTTPS网络安全(一)&amp;gt;导读：  本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接">
-<meta name="twitter:image" content="https://dishibolei.github.io/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_header_struct.png">
+<meta name="twitter:description" content="IOS应用安全-HTTP/HTTPS网络安全(一) 导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接触到的知">
+<meta name="twitter:image" content="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_header_struct.png">
 
 
 
@@ -330,8 +330,8 @@
       
 
       
-        <h1 id="IOS应用安全-HTTP-HTTPS网络安全-一"><a href="#IOS应用安全-HTTP-HTTPS网络安全-一" class="headerlink" title="IOS应用安全-HTTP/HTTPS网络安全(一)"></a>IOS应用安全-HTTP/HTTPS网络安全(一)</h1><p>&gt;<br>导读：</p>
-<blockquote>
+        <h1 id="IOS应用安全-HTTP-HTTPS网络安全-一"><a href="#IOS应用安全-HTTP-HTTPS网络安全-一" class="headerlink" title="IOS应用安全-HTTP/HTTPS网络安全(一)"></a>IOS应用安全-HTTP/HTTPS网络安全(一)</h1><blockquote>
+<p>导读：</p>
 <p>本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。</p>
 <p>主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。</p>
 <p>本文主要是简化的说明，和应用开发实际中真正接触到的知识。先偏理论，后续偏代码应用方面讲如何处理HTTPS的安全问题。</p>
@@ -356,9 +356,9 @@
 </ol>
 <ol>
 <li><p>http请求由三部分组成，分别是：请求行、消息报头、请求正文.详细的建议使用charles抓一个请求看下就知道了。</p>
-<p><img src="/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_header_struct.png" alt=""> </p>
+<p><img src="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_header_struct.png" alt=""> </p>
 <p>注：来源于<a href="http://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="external">http://www.cnblogs.com/ranyonsue/p/5984001.html</a>.</p>
-<p><img src="/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_header1.png" alt=""></p>
+<p><img src="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_header1.png" alt=""></p>
 <p>重要的几个请求报头字段：</p>
 <ul>
 <li>Accept: 指定客户端接受的消息类型（通常没人使用,因为客户端大量使用json做数据解析）</li>
@@ -368,7 +368,7 @@
 </ul>
 </li>
 <li><p>http的响应一般由三个部分组成，分别是:状态行，消息报头，响应正文。</p>
-<p> <img src="/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_response_struct.jpg" alt=""><br> 注：来源于<a href="http://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="external">http://www.cnblogs.com/ranyonsue/p/5984001.html</a>.</p>
+<p> <img src="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_response_struct.jpg" alt=""><br> 注：来源于<a href="http://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="external">http://www.cnblogs.com/ranyonsue/p/5984001.html</a>.</p>
 <p> 重要的几个消息报头</p>
 <ul>
 <li>Content-Type 正文媒体类型和编码格式，比如：<code>Content-Type:text/html;charset=ISO-8859-1</code>.Content-Type这个字段被AFNetworking框架用于决定用什么解析器，注意后端不要配置错了。charset被用于AFNetworking字符解码，也应该前后端配置正确。这个配置不正确是经常联调不过的原因。 具体实现参考<code>AFURLResonseSerialization.m</code>。</li>
@@ -394,12 +394,11 @@
 </ul>
 </li>
 </ol>
-<pre><code>看到上面的例子可以知道，有几个参数是必须的，`name、filename、Content-Type、具体资源数据` ，对应的AF接口：
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)appendPartWithFileData:(NSData *)data</div><div class="line">                      name:(NSString *)name</div><div class="line">                  fileName:(NSString *)fileName</div><div class="line">                  mimeType:(NSString *)mimeType;</div></pre></td></tr></table></figure>
+<p>   看到上面的例子可以知道，有几个参数是必须的，<code>name、filename、Content-Type、具体资源数据</code> ，对应的AF接口：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)appendPartWithFileData:(NSData *)data</div><div class="line">                      name:(NSString *)name</div><div class="line">                  fileName:(NSString *)fileName</div><div class="line">                  mimeType:(NSString *)mimeType;</div></pre></td></tr></table></figure>
 </code></pre><h2 id="2-HTTPS简介"><a href="#2-HTTPS简介" class="headerlink" title="2. HTTPS简介"></a>2. HTTPS简介</h2><p>苹果ATS政策出来之前，后端极少使用HTTPS协议，而是使用HTTP协议+自定义的安全数据加密策略来保证安全性。这是因为虽然HTTPS更安全，但是也更加耗费性能。如今苹果强推HTTPS（有说法是苹果可能会全面禁止HTTP的使用），使得HTTPS大范围使用，并且使用HTTPS作为安全扫描项，被安全机构接纳。但是如果不正确的使用HTTPS，还是会带来安全风险。</p>
 <h3 id="2-1-SSL-TLS简介"><a href="#2-1-SSL-TLS简介" class="headerlink" title="2.1 SSL/TLS简介"></a>2.1 SSL/TLS简介</h3><p>HTTPS的关键字就是SSL（TLS）。和HTTP唯一的不同就是加入了SSL（TLS）协议，这一层在TCP之上，负责保证安全连接和数据传输安全。</p>
-<p><img src="/Users/bolei/Documents/总结文档/JPG/safe/http/safe_https_protocol.png" alt=""></p>
+<p><img src="https://github.com/dishibolei/img/blob/master/safe/http/safe_https_protocol.png" alt=""></p>
 <p>注：来自 <a href="https://www.zybuluo.com/qidiandasheng/note/713956" target="_blank" rel="external">深入解析HTTPS</a> </p>
 <p>SSL实际上是一套加密通信机制。SSL和TLS两者的协议基本一致，区别简单可以理解是TLS是SSL的升级版本。<strong>但是使用SSL所有协议版本都不再安全。请勿使用SSL协议</strong> 具体可以参考<a href="http://kb.cnblogs.com/page/197396/" target="_blank" rel="external">SSL与TLS的区别以及介绍</a></p>
 <p>ios加入了ATS限制，强制原来HTTP必须使用HTTPS传输，也强制要求服务器必须使用TLS v1.2版本以上。所以简化为：</p>
@@ -407,7 +406,7 @@
 <p>PS：后面如无特殊说明，不再区分TLS和SSL，统一称为SSL</p>
 <h3 id="2-2-HTTPS原理"><a href="#2-2-HTTPS原理" class="headerlink" title="2.2 HTTPS原理"></a>2.2 HTTPS原理</h3><p>建议看下<a href="http://blog.csdn.net/muzhengjun/article/details/53379593" target="_blank" rel="external">浅析HTTPS中间人攻击与证书校验</a>和<a href="http://www.open-open.com/lib/view/open1411260089562.html" target="_blank" rel="external">阮一峰：图解SSL/TLS协议</a>和<a href="http://www.cnblogs.com/LittleHann/p/3733469.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">SSL、TLS协议格式入门学习 - .Little Hann</a></p>
 <p>下面是协议流程图：</p>
-<p><img src="/Users/bolei/Documents/总结文档/JPG/safe/http/safe_https_message.jpg" alt=""></p>
+<p><img src="https://github.com/dishibolei/img/blob/master/safe/http/safe_https_message.jpg" alt=""></p>
 <p>注：来自<a href="http://blog.csdn.net/muzhengjun/article/details/53379593" target="_blank" rel="external">http://blog.csdn.net/muzhengjun/article/details/53379593</a></p>
 <p>简单描述：</p>
 <ol>
@@ -516,7 +515,7 @@
 <p>这里讲两个问题。SSL证书是什么？为什么通过SSL证书可以防止攻击者伪装成服务端。</p>
 <h3 id="4-1-SSL证书是什么"><a href="#4-1-SSL证书是什么" class="headerlink" title="4.1 SSL证书是什么"></a>4.1 SSL证书是什么</h3><p>SSL证书是一个文件。里面的内容包括：用户的信息、用户的公钥、还有CA中心对该证书里面的信息的签名。<br>一个证书的实例：</p>
 <p>打开safari，打开百度，<code>https://www.baidu.com</code>,在地址栏点击锁按钮，然后选显示证书。</p>
-<p><img src="/Users/bolei/Documents/总结文档/JPG/safe/http/safe_https_cer.png" alt=""></p>
+<p><img src="https://github.com/dishibolei/img/blob/master/safe/http/safe_https_cer.png" alt=""></p>
 <p>里面的内容只有几个需要关注的：</p>
 <ol>
 <li>常用名称：<code>baidu.com</code> 。客户端或浏览器，根据常用名称和访问的域名做匹配，访问的域名和证书的域名不一致，就会拒绝访问，达到<strong>防止域名劫持的目的</strong>。这个信息可以被伪造。</li>
@@ -527,7 +526,7 @@
 </ol>
 <p>可以看到在百度这个证书上面还有两个证书，这是因为百度这个证书是有GS这个机构的二级机构颁发的，而GS这个二级机构是由GS的CA根证书颁发的。</p>
 <p>也就是证书有证书链的概念，即这个证书可能是上一层机构颁发的，从CA根证书开始-&gt;二级CA证书-&gt;三级CA证书-&gt;…。</p>
-<p><img src="/Users/bolei/Documents/总结文档/JPG/safe/http/safe_http_ssl_chain.png" alt=""></p>
+<p><img src="https://github.com/dishibolei/img/blob/master/safe/http/safe_http_ssl_chain.png" alt=""></p>
 <p>注：来自<a href="http://blog.csdn.net/shen_guo/article/details/49891459" target="_blank" rel="external">SSL 之证书链</a></p>
 <h3 id="4-2-SSL证书如何验证的"><a href="#4-2-SSL证书如何验证的" class="headerlink" title="4.2 SSL证书如何验证的"></a>4.2 SSL证书如何验证的</h3><p>推荐这篇文章，是目前看到讲的最清楚。<a href="http://www.2cto.com/article/201607/523509.html" target="_blank" rel="external">浅析HTTPS中间人攻击与证书校验</a></p>
 <p>根据HTTPS协议，服务端会在握手的时候将证书传送给客户单，<strong>而且是将整个证书链发过来</strong>。</p>
@@ -561,7 +560,7 @@
 <p>如果手机没有越狱，一定会引诱你去安装这个证书，并且手动设为可信。一旦信任，在访问服务器的时候，攻击者通过代理劫持，通过这个信任的CA证书，生成对应的域名的证书。最终因为域名可信，有效期可信，证书可信所以整个HTTPS建立成功，攻击者拿到相关的数据。</p>
 <p>使用charles抓包的整个过程，其实就是中间人攻击的过程。</p>
 <p>下面是charles开启SSL代理后，访问新浪弹出的证书信息：</p>
-<p><img src="/Users/bolei/Documents/总结文档/JPG/safe/http/safe_https_fake.png" alt=""></p>
+<p><img src="https://github.com/dishibolei/img/blob/master/safe/http/safe_https_fake.png" alt=""></p>
 <p>提示：<strong>对于用户来说，不要信任任何CA证书，不安装任何描述文件是最安全的方法。</strong>比如安装飙车软件，让你信任一个证书。比如链接外部wifi，提示你安装证书才可以链接。比如翻墙设置代理，提示你安装信任证书。描述文件在通用-&gt;描述文件与设备管理中找到。</p>
 <h3 id="4-5-校验证书的姿势"><a href="#4-5-校验证书的姿势" class="headerlink" title="4.5 校验证书的姿势"></a>4.5 校验证书的姿势</h3><p>校验证书有两种方案：</p>
 <blockquote>
@@ -575,7 +574,7 @@
 <li>校验证书的有效期</li>
 <li>校验证书链和证书的有效性</li>
 </ol>
-<p>保证这三者有效，已经可以解决大部分的攻击了，对于大部分APP已经试用。唯一的风险就是中间人攻击，被安装CA证书之后，存在着风险，但是攻击难度已经大大增加了。AFNetworking框架默认采用的就是这个策略。</p>
+<p>保证这三者有效，已经可以解决大部分的攻击了，对于大部分APP已经试用。唯一的风险就是中间人攻击，被安装CA证书之后，存在着风险，但是攻击难度已经大大增加了。<em>AFNetworking框架默认采用的就是这个策略</em>。</p>
 <blockquote>
 <blockquote>
 <p>强校验</p>
@@ -583,8 +582,7 @@
 </blockquote>
 <p>将证书放入APP中作为证书锚点。在上面的基础上在验证证书。这样可以完全保证服务端的证书是真正需要的证书，从而真正解决中间人攻击。</p>
 <p>下面主要讲下强校验面临的坑，各位开发一定要注意。</p>
-<h3 id="4-6-证书强校验的坑"><a href="#4-6-证书强校验的坑" class="headerlink" title="4.6 证书强校验的坑"></a>4.6 证书强校验的坑</h3><p>证书是有有效期的，尤其是非自制证书，通常都在三年以内，自制证书一般没有限制（所以很多资料根本不谈这个问题）。一旦有效期过了，服务端就需要更换证书,但是由于APP存在发版的情况，老的APP由于所有链接失败，导致老APP任何请求都失效，然后无法通知用户更新，老用户也不知道因为什么访问失败。（这些都是血的教训啊。去年为了处理这个破事操碎了心，所以看到这个的开发，不要犯这个错误。）</p>
-<p>如何解决？本人也没有非常好的方案，如果有业内成熟的方案，感谢发出来。</p>
+<h3 id="4-6-证书强校验的坑"><a href="#4-6-证书强校验的坑" class="headerlink" title="4.6 证书强校验的坑"></a>4.6 证书强校验的坑</h3><p>证书是有有效期的，尤其是非自制证书，通常都在三年以内，自制证书一般没有限制（所以很多资料根本不谈这个问题）。一旦有效期过了，服务端就需要更换证书,但是由于APP存在发版的情况，老的APP由于所有链接失败，导致老APP任何请求都失效，然后无法通知用户更新，老用户也不知道因为什么访问失败。（这些都是血的教训啊）</p>
 <p>有几个建议的地方：</p>
 <ol>
 <li>尽量埋CA证书，因为CA证书的有效期要长，有足够的时间准备。</li>
@@ -649,14 +647,14 @@
 <ul>
 <li><p>安装Charles CA根证书 </p>
 <p>点击Help-&gt;SSL Proxying-&gt;Install Charles Root Certification …，会弹出如下提示，链接代理，手机浏览器输入chls.pro/ssl，就可以安装根证书了。 </p>
-<p><img src="/Users/bolei/Documents/总结文档/JPG/safe/http/charles_1.png" alt=""></p>
+<p><img src="https://github.com/dishibolei/img/blob/master/safe/http/charles_1.png" alt=""></p>
 </li>
 </ul>
 <ul>
 <li><p>设置SSL代理 </p>
-<p>  点击Proxy-&gt;SSL Proxying Setting，勾选Enable SSL Proxying，然后点击Add输入要SSL代理的请求Host和Port，可以使用通配符来表示某一类请求。<br> <img src="/Users/bolei/Documents/总结文档/JPG/safe/http/charles_2.png" alt=""></p>
+<p>  点击Proxy-&gt;SSL Proxying Setting，勾选Enable SSL Proxying，然后点击Add输入要SSL代理的请求Host和Port，可以使用通配符来表示某一类请求。<br> <img src="https://github.com/dishibolei/img/blob/master/safe/http/charles_2.png" alt=""></p>
 <p> 或者在对应的请求上右键选择Enable SSL Proxying，就会把这一个请求加入到上面的SSL代理列表中（类似于点击Add的效果）。 </p>
-<p> <img src="/Users/bolei/Documents/总结文档/JPG/safe/http/charles_3.png" alt=""></p>
+<p> <img src="https://github.com/dishibolei/img/blob/master/safe/http/charles_3.png" alt=""></p>
 <p>  做完上述步骤后重新请求就能得到解密后的信息了。ps:抓取PC端的HTTPS包也类似，在Help-&gt;SSL Proxying中下载证书，双击安装证书，并选择始终信任即可。</p>
 </li>
 </ul>
@@ -664,9 +662,9 @@
 <li><p>在iPhone端设置HTTP代理</p>
 <p>  在Mac上获取当前机器的IP地址：</p>
 <p>  ifconfig en0:</p>
-<p>  <img src="/Users/bolei/Documents/总结文档/JPG/safe/http/charles_4.jpg" alt=""></p>
+<p>  <img src="https://github.com/dishibolei/img/blob/master/safe/http/charles_4.jpg" alt=""></p>
 <p> ch将iPhone连接到与电脑相同的WiFi，在iPhone设置中：无线局域网 -&gt; 已连接WiFi右边的Info详情图标 -&gt; HTTP代理 -&gt; 手动 -&gt; 设置HTTP代理：</p>
-<p> <img src="/Users/bolei/Documents/总结文档/JPG/safe/http/charles_5.jpg" alt=""></p>
+<p> <img src="https://github.com/dishibolei/img/blob/master/safe/http/charles_5.jpg" alt=""></p>
 <p> 设置完成之后，打开Safari随便访问一个网页，初次设置代理的话，Charles会弹出一个iPhone请求代理的确认框，点击Allow即可。然后在Charles上就可以看到iPhone上的HTTP请求了。为了避免Mac上的请求过多影响对被代理iPhone上HTTP请求的查看和调试，可以在Charles取消Mac的代理：Menu -&gt; Proxy -&gt; 取消勾选Mac OS X Proxy 即可。</p>
 </li>
 </ul>
