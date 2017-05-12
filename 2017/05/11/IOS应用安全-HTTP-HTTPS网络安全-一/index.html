@@ -112,7 +112,7 @@
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/charles_3.png">
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/charles_4.jpg">
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/charles_5.jpg">
-<meta property="og:updated_time" content="2017-05-12T08:43:38.000Z">
+<meta property="og:updated_time" content="2017-05-12T08:55:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IOS应用安全-HTTP&#x2F;HTTPS网络安全(一)">
 <meta name="twitter:description" content="导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：HTTP和HTTPS的简单介绍。介绍HTTPS加密逻辑。介绍SSL证书和SSL证书校验的规则。 本文简化了相关的技术细节，主要关注于前端开发需要关注的点和可以借鉴的地方，希望能对开发能有所帮助。开发更关心的技术代码实现细节，会单独文章中说明。">
@@ -710,11 +710,9 @@
 <li><p>使用刚才的私钥签名</p>
 <p><code>openssl req -new -key server.key -out server.csr</code></p>
 <p>弹出的对话框按照提示填写：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">  Country Name (2 letter code) [AU]:CN</div><div class="line">State or Province Name (full name) [Some-State]:Guangdong</div><div class="line">Locality Name (eg, city) []:Shenzhen</div><div class="line">Organization Name (eg, company) [Internet Widgits Pty Ltd]:BL.inc</div><div class="line">Organizational Unit Name (eg, section) []:</div><div class="line">Common Name (e.g. server FQDN or YOUR name) []:*.sina.com.cn</div><div class="line">Email Address []:</div><div class="line"></div><div class="line">Please enter the following &apos;extra&apos; attributes</div><div class="line">to be sent with your certificate request</div><div class="line">A challenge password []:1111</div><div class="line">An optional company name []:</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  Country Name (2 letter code) [AU]:CN</div><div class="line">State or Province Name (full name) [Some-State]:Guangdong</div><div class="line">Locality Name (eg, city) []:Shenzhen</div><div class="line">Organization Name (eg, company) [Internet Widgits Pty Ltd]:BL.inc</div><div class="line">Organizational Unit Name (eg, section) []:</div><div class="line">Common Name (e.g. server FQDN or YOUR name) []:*.sina.com.cn</div><div class="line">Email Address []:</div><div class="line"></div><div class="line">Please enter the following &apos;extra&apos; attributes</div><div class="line">to be sent with your certificate request</div><div class="line">A challenge password []:1111</div><div class="line">An optional company name []:</div></pre></td></tr></table></figure>
+<p>注意，这里的Common Name 应该和实际的域名匹配。而且生成的.csr这个文件最好长期保留，下次过期的时候，建议直接用这个文件做签名。如果是向CA颁发机构申请，提交的文件也是这个文件。</p>
 </li>
-</ol>
-<p>   注意，这里的Common Name 应该和实际的域名匹配。而且生成的.csr这个文件最好长期保留，下次过期的时候，建议直接用这个文件做签名。如果是向CA颁发机构申请，提交的文件也是这个文件。</p>
-<ol>
 <li><p>对上一步的csr使用CA进行签名生成证书</p>
 <p><code>openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt</code>   </p>
 </li>
