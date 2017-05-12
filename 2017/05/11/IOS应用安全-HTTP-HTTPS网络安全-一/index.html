@@ -92,13 +92,13 @@
 
 
 
-<meta name="description" content="导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接触到的知识。先偏理论，后续偏代码应用方面讲如何处理HTTP">
+<meta name="description" content="导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：HTTP和HTTPS的简单介绍。介绍HTTPS加密逻辑。介绍SSL证书和SSL证书校验的规则。 本文简化了相关的技术细节，主要关注于前端开发需要关注的点和可以借鉴的地方，希望能对开发能有所帮助。开发更关心的技术代码实现细节，会单独文章中说明。">
 <meta name="keywords" content="安全,HTTPS,SSL证书">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IOS应用安全-HTTP&#x2F;HTTPS网络安全(一)">
 <meta property="og:url" content="https://dishibolei.github.io/2017/05/11/IOS应用安全-HTTP-HTTPS网络安全-一/index.html">
 <meta property="og:site_name" content="萝卜的空间">
-<meta property="og:description" content="导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接触到的知识。先偏理论，后续偏代码应用方面讲如何处理HTTP">
+<meta property="og:description" content="导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：HTTP和HTTPS的简单介绍。介绍HTTPS加密逻辑。介绍SSL证书和SSL证书校验的规则。 本文简化了相关的技术细节，主要关注于前端开发需要关注的点和可以借鉴的地方，希望能对开发能有所帮助。开发更关心的技术代码实现细节，会单独文章中说明。">
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/safe_http_header_struct.png">
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/safe_http_header1.png">
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/safe_http_response_struct.jpg">
@@ -112,10 +112,10 @@
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/charles_3.png">
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/charles_4.jpg">
 <meta property="og:image" content="https://github.com/dishibolei/img/raw/master/safe/http/charles_5.jpg">
-<meta property="og:updated_time" content="2017-05-11T10:36:49.000Z">
+<meta property="og:updated_time" content="2017-05-12T08:43:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IOS应用安全-HTTP&#x2F;HTTPS网络安全(一)">
-<meta name="twitter:description" content="导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。 本文主要是简化的说明，和应用开发实际中真正接触到的知识。先偏理论，后续偏代码应用方面讲如何处理HTTP">
+<meta name="twitter:description" content="导读： 本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。 主要包括：HTTP和HTTPS的简单介绍。介绍HTTPS加密逻辑。介绍SSL证书和SSL证书校验的规则。 本文简化了相关的技术细节，主要关注于前端开发需要关注的点和可以借鉴的地方，希望能对开发能有所帮助。开发更关心的技术代码实现细节，会单独文章中说明。">
 <meta name="twitter:image" content="https://github.com/dishibolei/img/raw/master/safe/http/safe_http_header_struct.png">
 
 
@@ -412,11 +412,11 @@
         <blockquote>
 <p>导读：</p>
 <p>本文主要讲在HTTP和HTTPS实际开发中有用和有意思的地方，希望读者能够有所启发。</p>
-<p>主要包括：先讲HTTP协议，然后讲HTTPS协议，主要是HTTPS中加密流程和其中的策略，然后通过这个流程切入到常用的攻击手段、最后开始介绍SSL证书和说明为什么SSL证书验证可以有效的解决安全问题。</p>
-<p>本文主要是简化的说明，和应用开发实际中真正接触到的知识。先偏理论，后续偏代码应用方面讲如何处理HTTPS的安全问题。</p>
+<p>主要包括：HTTP和HTTPS的简单介绍。介绍HTTPS加密逻辑。介绍SSL证书和SSL证书校验的规则。</p>
+<p>本文简化了相关的技术细节，主要关注于前端开发需要关注的点和可以借鉴的地方，希望能对开发能有所帮助。开发更关心的技术代码实现细节，会单独文章中说明。</p>
 </blockquote>
 <a id="more"></a>
-<h1 id="HTTP简介"><a href="#HTTP简介" class="headerlink" title="HTTP简介"></a>HTTP简介</h1><p>具体说明不想过多讨论，可以参考后面的参考文献，只写我觉得有意思和实际中可以参考的地方。</p>
+<h1 id="HTTP简介"><a href="#HTTP简介" class="headerlink" title="HTTP简介"></a>HTTP简介</h1><p>具体细节可以参考后面的参考文献，只写我觉得有意思和实际中可以参考的地方。</p>
 <ol>
 <li><p>HTTP协议构建于TCP之上。意味着http是可靠的数据传输。所以不用担心丢包和乱序的问题。</p>
 </li>
@@ -464,19 +464,18 @@
 <li>安全性，post相对安全，get相对不安全。不过post属于防君子不防小人的那种，实际没有什么安全可言。<br>所以综合来说，如果没有技术洁癖，建议都用post处理。</li>
 </ul>
 </li>
-<li><p>上传图片等文本资源。上传资源一般是post协议，但是通常post是用于传送文本的，如何传图片等资源呢？就需要<code>multipart</code>协议了。</p>
+<li><p>上传图片等二进制资源。上传资源一般是post协议，但是通常post是用于传送文本的，如何传图片等资源呢？就需要<code>multipart</code>协议了。</p>
 <p> mutipart和普通的post有两点不同：请求头，请求报文。其中关键字是<code>boundary</code>这个属性。</p>
 <ul>
 <li>请求头： 必须包含<code>content-Type</code>，且值为：<code>multipart/form-data;boundary=${bond}</code>,其中${bound}为具体分割符，在AFNetworking中，如果不指定是<code>Boundary+${random}</code>。</li>
-<li><p>请求体:内容不再是用name=value的形式，而是使用上面的boundary进行分割的一段一段的结构体。具体示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line">POST /btoa/work/common/uploadImage HTTP/1.1</div><div class="line">Host: www.example.com</div><div class="line">Content-Type: multipart/form-data; boundary=Boundary+49F77F66A65EEA58</div><div class="line">Cookie: BIGipServerPOOL_PACLOUD_STGR2016080900646=1274288556.52384.0000; FF_SESSION2_ID=Sf503bee3691b4a31a53c6e3c5ae1c1f00912e8</div><div class="line">Connection: keep-alive</div><div class="line">Accept: */*</div><div class="line">User-Agent: FFProject/2.0.0 (iPhone; iOS 10.3.1; Scale/3.00)</div><div class="line">Accept-Language: zh-Hans-CN;q=1, th-TH;q=0.9</div><div class="line">Content-Length: 418864</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line"></div><div class="line">--Boundary+49F77F66A65EEA58</div><div class="line">Content-Disposition: form-data; name=&quot;ffAppID&quot;</div><div class="line"></div><div class="line">10004</div><div class="line">--Boundary+49F77F66A65EEA58</div><div class="line">Content-Disposition: form-data; name=&quot;imageSeq&quot;</div><div class="line"></div><div class="line">1</div><div class="line">--Boundary+49F77F66A65EEA58</div><div class="line">Content-Disposition: form-data; name=&quot;imageType&quot;</div><div class="line"></div><div class="line">5</div><div class="line">--Boundary+49F77F66A65EEA58</div><div class="line">Content-Disposition: form-data; name=&quot;image&quot;; filename=&quot;xxxx.jpg&quot;</div><div class="line">Content-Type: image/jpeg</div><div class="line"></div><div class="line">***image hex data***</div><div class="line"></div><div class="line">--Boundary+49F77F66A65EEA58--</div></pre></td></tr></table></figure>
-</li>
+<li>请求体:内容不再是用name=value的形式，而是使用上面的boundary进行分割的一段一段的结构体。具体示例：</li>
 </ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line">POST /btoa/work/common/uploadImage HTTP/<span class="number">1.1</span></div><div class="line">Host: www.example.com</div><div class="line">Content-Type: multipart/form-data; boundary=Boundary+<span class="number">49</span>F77F66A65EEA58</div><div class="line">Cookie: BIGipServerPOOL_PACLOUD_STGR2016080900646=<span class="number">1274288556.52384</span><span class="number">.0000</span>; FF_SESSION2_ID=Sf503bee3691b4a31a53c6e3c5ae1c1f00912e8</div><div class="line">Connection: keep-alive</div><div class="line">Accept: *<span class="comment">/*</span></div><div class="line">User-Agent: FFProject/2.0.0 (iPhone; iOS 10.3.1; Scale/3.00)</div><div class="line">Accept-Language: zh-Hans-CN;q=1, th-TH;q=0.9</div><div class="line">Content-Length: 418864</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line"></div><div class="line">--Boundary+49F77F66A65EEA58</div><div class="line">Content-Disposition: form-data; name="ffAppID"</div><div class="line"></div><div class="line">10004</div><div class="line">--Boundary+49F77F66A65EEA58</div><div class="line">Content-Disposition: form-data; name="imageSeq"</div><div class="line"></div><div class="line">1</div><div class="line">--Boundary+49F77F66A65EEA58</div><div class="line">Content-Disposition: form-data; name="imageType"</div><div class="line"></div><div class="line">5</div><div class="line">--Boundary+49F77F66A65EEA58</div><div class="line">Content-Disposition: form-data; name="image"; filename="xxxx.jpg"</div><div class="line">Content-Type: image/jpeg</div><div class="line"></div><div class="line">***image hex data***</div><div class="line"></div><div class="line">--Boundary+49F77F66A65EEA58--</div></pre></td></tr></table></figure>
+<p>看到上面的例子可以知道，有几个参数是必须的，name、filename、Content-Type、具体资源数据 ，对应的AF接口：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)appendPartWithFileData:(<span class="built_in">NSData</span> *)data</div><div class="line">                    name:(<span class="built_in">NSString</span> *)name</div><div class="line">                fileName:(<span class="built_in">NSString</span> *)fileName</div><div class="line">                mimeType:(<span class="built_in">NSString</span> *)mimeType;</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>   看到上面的例子可以知道，有几个参数是必须的，<code>name、filename、Content-Type、具体资源数据</code> ，对应的AF接口：</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)appendPartWithFileData:(NSData *)data</div><div class="line">                      name:(NSString *)name</div><div class="line">                  fileName:(NSString *)fileName</div><div class="line">                  mimeType:(NSString *)mimeType;</div></pre></td></tr></table></figure>
-</code></pre><h1 id="HTTPS简介"><a href="#HTTPS简介" class="headerlink" title="HTTPS简介"></a>HTTPS简介</h1><p>苹果ATS政策出来之前，后端极少使用HTTPS协议，而是使用HTTP协议+自定义的安全数据加密策略来保证安全性。这是因为虽然HTTPS更安全，但是也更加耗费性能。如今苹果强推HTTPS（有说法是苹果可能会全面禁止HTTP的使用），使得HTTPS大范围使用，并且使用HTTPS作为安全扫描项，被安全机构接纳。但是如果不正确的使用HTTPS，还是会带来安全风险。</p>
+<h1 id="HTTPS简介"><a href="#HTTPS简介" class="headerlink" title="HTTPS简介"></a>HTTPS简介</h1><p>苹果ATS政策出来之前，后端极少使用HTTPS协议，而是使用HTTP协议+自定义的安全数据加密策略来保证安全性。这是因为虽然HTTPS更安全，但是也更加耗费性能。如今苹果强推HTTPS（有说法是苹果可能会全面禁止HTTP的使用），使得HTTPS大范围使用，并且使用HTTPS作为安全扫描项，被安全机构接纳。但是如果不正确的使用HTTPS，还是会带来安全风险。</p>
 <h2 id="SSL-TLS简介"><a href="#SSL-TLS简介" class="headerlink" title="SSL/TLS简介"></a>SSL/TLS简介</h2><p>HTTPS的关键字就是SSL（TLS）。和HTTP唯一的不同就是加入了SSL（TLS）协议，这一层在TCP之上，负责保证安全连接和数据传输安全。</p>
 <p><img src="https://github.com/dishibolei/img/raw/master/safe/http/safe_https_protocol.png" alt=""></p>
 <p>注：来自 <a href="https://www.zybuluo.com/qidiandasheng/note/713956" target="_blank" rel="external">深入解析HTTPS</a> </p>
@@ -497,8 +496,8 @@
 <p>下面也是只讲一些有意思的点和注意的地方。</p>
 <h3 id="HTTPS加密流程"><a href="#HTTPS加密流程" class="headerlink" title="HTTPS加密流程"></a>HTTPS加密流程</h3><p>整个加密的流程，体现了一个非常安全的信息加密的方案。 简化的流程如下：</p>
 <ol>
-<li>客户发送一个随机数给服务端，random-c（明文）</li>
-<li>服务端发送自己SSL证书给客户端。发送服务端随机数，random-s（明文）</li>
+<li>客户发送一个随机数给服务端：random-c（明文）</li>
+<li>服务端发送自己SSL证书给客户端。发送服务端随机数：random-s（明文）</li>
 <li><strong>客户端验证SSL证书有效性，如果判定有效，生成一个随机数random-p,然后使用证书中的公钥进行非对称加密，发送给服务端。</strong> （这一步是整个安全环节最重要也是最薄弱的环节）</li>
 <li>服务端拿到加密后的秘钥，通过私钥解密，得到random-p ，将random-c、random-s、random-p三个随机数做因子，两端都按照一定算法生成会话对称秘钥secret_key。</li>
 <li>客户端计算之前的握手消息（除了Change Cipher Spec外）的Hash值，利用secret_key做对称加密后发给服务端。</li>
@@ -508,7 +507,7 @@
 <p>先简单说明几个概念，详细的会专门抽出来分享：</p>
 <ol>
 <li>对称加密：双方使用的秘钥是相同的，使用同一个秘钥进行加解密。</li>
-<li>非对称加密：加密使用公钥加密，解密使用私钥加密。或者私钥加密，使用公钥解密。但是公钥和私钥是不同的。公钥是公开的，可以被第三方拿到而不会引起任何安全问题，因为通过公钥是无法得到私钥的，也没办法解密使用公钥加密的数据。</li>
+<li>非对称加密：加密使用公钥加密，解密使用私钥加密。或者私钥加密，使用公钥解密。但是公钥和私钥是不同的。公钥是公开的，可以被第三方拿到而不会引起任何安全问题，因为通过公钥是无法得到私钥的，因而没办法解密使用公钥加密的数据。</li>
 <li>散列（hash）：散列变换是指把文件内容通过某种公开的算法，变成固定长度的值（散列值），这个过程可以使用密钥也可以不使用。这种散列变换是不可逆的，也就是说不能从散列值变成原文。好的散列算法是一对一的，不同的原文生成的一定是不同的散列。</li>
 </ol>
 <p>这其中使用的加密策略：</p>
@@ -543,9 +542,9 @@
 </blockquote>
 </li>
 </ol>
-<p><strong>所以下面是非常建议的一个信道传输加密的方案</strong>：</p>
+<p><strong>如果对原理不感兴趣，那建议记住下面推荐的加密方案</strong>，完全可以解决大部分的加密需求：</p>
 <ol>
-<li>使用随机数做对称加密秘钥，将对称加密秘钥使用公钥进行非对称加密传给后端。这样因为秘钥随机，所以即使客户端被破解，也拿不到任何对称秘钥。而公钥进行动态获取，避免私钥泄露带来的问题。</li>
+<li>使用随机数做对称加密秘钥，将对称加密秘钥使用公钥进行非对称加密传给后端。这样因为秘钥随机，所以即使客户端被破解，也拿不到任何对称秘钥。而公钥建议老客户过3456让她进行动态获取，避免私钥泄露带来的问题。</li>
 <li>使用非对称加密秘钥，可以保证网络数据即使劫持，因为没有私钥，也解不出来对应的加密秘钥，所以加密的隐私数据也是安全的</li>
 <li>两者结合，可以保证一定的性能要求。</li>
 <li>对数据进行加签（加盐+hash算法），保证中间的数据不会篡改。</li>
@@ -559,7 +558,7 @@
 </ol>
 <p>如果新加入一个攻击者，他想要窃取用户的隐私数据，他该怎么做？常见的做法：</p>
 <ol>
-<li>攻击客户端。对于IOS系统来说，非越狱手机，由于权限问题，几乎无法攻击（之前<a href="https://www.baidu.com/link?url=gtxpH2omxSt5NpX-5RmuUYCFmWA-C49q7fQPWnJMO7wtUCpSIXTuEoYZ4B94QDc9Po6lrX7SzKvtEMH8R46XGfGKtnx42FxROp5zbVZ6Irm&amp;wd=&amp;eqid=aa656a8100001a250000000659127d0b" target="_blank" rel="external">XcodeGhost</a>真的是很nb的攻击思路）。对于越狱手机，通过HOOK API，然后重新打包应用，诱导用户下载。或者劫持系统的输入框等常用控件。相关的以后整理输出。但是从移动APP来说，直接攻击APP带来的危害和利用性很低，通常只会泄露很少的用户信息。大多是利用来薅羊毛的。</li>
+<li>攻击客户端。对于IOS系统来说，非越狱手机，由于权限问题，几乎无法攻击（之前<a href="https://www.baidu.com/link?url=gtxpH2omxSt5NpX-5RmuUYCFmWA-C49q7fQPWnJMO7wtUCpSIXTuEoYZ4B94QDc9Po6lrX7SzKvtEMH8R46XGfGKtnx42FxROp5zbVZ6Irm&amp;wd=&amp;eqid=aa656a8100001a250000000659127d0b" target="_blank" rel="external">XcodeGhost</a>真的是很nb的攻击思路）。对于越狱手机，通过HOOK API，然后重新打包应用，诱导用户下载。或者劫持系统的输入框等常用控件可以达到攻击目的。相关的以后整理输出。但是从移动APP来说，直接攻击APP带来的危害和利用性很低，通常只会泄露很少的用户信息。大多是利用来薅羊毛的。</li>
 <li>攻击传输信道。攻击手段有中间人攻击，DNS劫持等。</li>
 <li>攻击服务端。也非常难做到。一般是模板注入，撞库等。</li>
 </ol>
@@ -576,14 +575,14 @@
 <ol>
 <li>请求中一定加入签名策略。攻击者不知道签名策略是无法仿造请求的，也防止劫持者修改。发现签名不对，服务端认为是假的客户端。</li>
 <li>请求中一定加入请求防重放策略。服务端发现是之前的请求，重复发送过来的（可能只有签名不一致），应该忽略</li>
-<li>加入风险控制策略。比如异地登陆，同一设备ip反复请求，一些金融类app也会加入公安部认证的风控系统，防止一些有金融犯罪前科的用户请求。后端使用风控策略，禁止用户登录，或者强制要求用户再次身份认证，比如手机验证码认证。</li>
+<li>加入风险控制策略。比如异地登陆，同一设备ip反复请求，一些金融类app也会加入公安部认证的风控系统，防止一些有金融犯罪前科的用户注册。后端使用风控策略，禁止用户登录，或者强制要求用户再次身份认证，比如手机验证码认证。</li>
 </ol>
 </blockquote>
 <p>问：如何处理监听修改信道数据<br>&gt;</p>
 <blockquote>
 <ol>
 <li>请求关键数据做加密，加密方案建议使用上面提到的加密方案。这样即使被监听，拿到数据也无法处理</li>
-<li>加入签名，防止数据篡改。</li>
+<li>加入请求签名，防止数据篡改。</li>
 </ol>
 </blockquote>
 <p>问：如何处理伪装成正常的服务端，劫持客户端数据</p>
@@ -620,26 +619,26 @@
 <h2 id="如何验证CA根证书有效性"><a href="#如何验证CA根证书有效性" class="headerlink" title="如何验证CA根证书有效性"></a>如何验证CA根证书有效性</h2><p>最终层层拨茧，HTTPS的安全性关键钥匙就在这一章了。</p>
 <p>CA根证书有两种生成方式：</p>
 <ol>
-<li>由可信的颁发机构办法</li>
+<li>由可信的颁发机构颁发</li>
 <li>本地自己生成</li>
 </ol>
-<p>对于第一种，因为可信的颁发机构很少，这些机构的CA证书会默认保存在浏览器里或者手机操作系统里，这种证书的有效性会由办法机构保证。不过这种证书需要向颁发机构申请，颁发机构会花时间去进行公司域名身份等信息验证，所以花费也不少。</p>
+<p>对于第一种，因为可信的颁发机构很少，这些机构的CA证书会默认保存在浏览器里或者手机操作系统里，由可信的机构颁发的证书的有效性会由颁发机构保证。不过这种证书需要向颁发机构申请，颁发机构会花时间去进行公司域名身份等信息验证，所以花费也不少。</p>
 <p>对于第二种，本地生成的证书（后面会附录如何生成自签名证书），证书常用的信息都可以生成，可以认为证书信息内容都不可靠，尤其是证书中的域名。使用自制证书在浏览器会弹出警告不可信，用户可以手动添加到信任列表里，之后可信了才可以访问，12306之前让下载证书导入，就是这个原因。在应用APP里，如果使用默认配置，会拒绝，返回SSL验证失败。</p>
-<p>这时候两种办法：</p>
+<p>在应用内信任自生成证书有两种办法：</p>
 <p>第一种</p>
 <blockquote>
-<p>安装描述文件到系统里。在安装charles过程中，其中一步就是打开一个网址，在弹出安装的时候，安装这个证书，也可以把这个证书下载到云盘里，然后打开。这个过程需要用户手动授权。</p>
+<p>安装描述文件到系统里。在安装charles过程中，其中一步就是打开一个网址，在弹出安装的时候，安装这个证书，也可以把这个证书下载到云盘里，然后打开。这个过程需要用户手动授权。这个起效后是全局的，任何应用都会影响。</p>
 </blockquote>
 <p>第二种</p>
 <blockquote>
-<p>把这个根证书，埋入APP里,然后设置为证书锚点（可以设置多个），然后在SSL握手需要验证证书的时候，这样系统会认为这个证书是有效的。这个方案也是很多自签名证书进行校验的方法。</p>
+<p>把这个根证书，埋入APP里,然后设置为证书锚点（可以设置多个），然后在SSL握手需要验证证书的时候，系统会认为这个证书是有效的。这个方案也是很多自签名证书进行校验的方法。这个只会在本应用里起作用。</p>
 </blockquote>
 <h2 id="中间人攻击"><a href="#中间人攻击" class="headerlink" title="中间人攻击"></a>中间人攻击</h2><p>中间人攻击是最常见的攻击HTTPS手段。</p>
 <p>建议看这篇文章：<a href="http://oncenote.com/2015/09/16/Security-2-HTTPS2/" target="_blank" rel="external">iOS安全系列之二：HTTPS进阶</a></p>
 <p>看到上面的验证手段，其实关键就在于如何信任CA根证书上面。攻击者就是想尽一切办法让客户端安装他自己的CA证书到你的手机里。</p>
-<p>如果手机没有越狱，一定会引诱你去安装这个证书，并且手动设为可信。一旦信任，在访问服务器的时候，攻击者通过代理劫持，通过这个信任的CA证书，生成对应的域名的证书。最终因为域名可信，有效期可信，证书可信所以整个HTTPS建立成功，攻击者拿到相关的数据。</p>
+<p>如果手机没有越狱，一定会引诱你去安装这个证书，并且手动设为可信。一旦信任，在访问服务器的时候，攻击者通过代理劫持，通过这个信任的CA证书，生成对应的域名的证书。最终因为<strong>域名可信，有效期可信，证书可信</strong>整个HTTPS建立成功，攻击者拿到相关的数据。</p>
 <p>使用charles抓包的整个过程，其实就是中间人攻击的过程。</p>
-<p>下面是charles开启SSL代理后，访问新浪弹出的证书信息：</p>
+<p>附：下面是charles开启SSL代理后，访问新浪弹出的证书信息，可以看到charles生成了新浪域名的证书：</p>
 <p><img src="https://github.com/dishibolei/img/raw/master/safe/http/safe_https_fake.png" alt=""></p>
 <p>提示：<strong>对于用户来说，不要信任任何CA证书，不安装任何描述文件是最安全的方法。</strong>比如安装飙车软件，让你信任一个证书。比如链接外部wifi，提示你安装证书才可以链接。比如翻墙设置代理，提示你安装信任证书。描述文件在通用-&gt;描述文件与设备管理中找到。</p>
 <h2 id="校验证书的姿势"><a href="#校验证书的姿势" class="headerlink" title="校验证书的姿势"></a>校验证书的姿势</h2><p>校验证书有两种方案：</p>
@@ -654,31 +653,32 @@
 <li>校验证书的有效期</li>
 <li>校验证书链和证书的有效性</li>
 </ol>
-<p>保证这三者有效，已经可以解决大部分的攻击了，对于大部分APP已经试用。唯一的风险就是中间人攻击，被安装CA证书之后，存在着风险，但是攻击难度已经大大增加了。<em>AFNetworking框架默认采用的就是这个策略</em>。</p>
+<p>保证这三者有效，已经可以解决大部分的攻击了。唯一的风险就是中间人攻击，被安装CA证书之后，<strong>一个被信任的CA根证书可以生成符合上面要求的任何域名的证书</strong>。存在着风险，但是攻击难度已经大大增加了。<em>AFNetworking框架默认采用的就是这个策略</em>。</p>
 <blockquote>
 <blockquote>
 <p>强校验</p>
 </blockquote>
 </blockquote>
-<p>将证书放入APP中作为证书锚点。在上面的基础上在验证证书。这样可以完全保证服务端的证书是真正需要的证书，从而真正解决中间人攻击。</p>
+<p>将证书放入APP中作为证书锚点。在上面的基础上再验证证书。这样可以完全保证服务端的证书是真正需要的证书，从而真正解决中间人攻击。</p>
 <p>下面主要讲下强校验面临的坑，各位开发一定要注意。</p>
-<h2 id="证书强校验的坑"><a href="#证书强校验的坑" class="headerlink" title="证书强校验的坑"></a>证书强校验的坑</h2><p>证书是有有效期的，尤其是非自制证书，通常都在三年以内，自制证书一般没有限制（所以很多资料根本不谈这个问题）。一旦有效期过了，服务端就需要更换证书,但是由于APP存在发版的情况，老的APP由于所有链接失败，导致老APP任何请求都失效，然后无法通知用户更新，老用户也不知道因为什么访问失败。（这些都是血的教训啊）</p>
+<h2 id="证书强校验的坑"><a href="#证书强校验的坑" class="headerlink" title="证书强校验的坑"></a>证书强校验的坑</h2><p>证书是有有效期的，尤其是非自制证书，通常都在三年以内（很多资料根本不谈这个问题）。一旦有效期过了，服务端就需要更换证书,但是由于APP存在发版的情况，老的APP由于所有链接失败，导致老APP任何请求都失效，然后无法通知用户更新，老用户也不知道因为什么访问失败。（这些都是血的教训啊）</p>
 <p>有几个建议的地方：</p>
 <ol>
 <li>尽量埋CA证书，因为CA证书的有效期要长，有足够的时间准备。</li>
 <li>有些通道不要使用证书强校验，比如检查升级，一些热修复策略，尽量使用自有的安全逻辑保证安全。</li>
+<li>如果是自制证书，建议有效期设置长一些。</li>
 </ol>
 <p>上面的是尽量降低风险，该出问题的时候还是会出，有一些不完美的方案大家可以参考下：</p>
 <p>方案1：动态更新证书。</p>
 <blockquote>
 <blockquote>
-<p>在APP中放入RSA公钥，应用启动的时候，证书信息通过私钥加密，发送给前端保存，前端把这个新证书和埋入的证书一起做锚点，进行验证。这样可以保证老APP可以使用一段时间。缺点是这个下发的机制要尽量安全可靠，有可能被攻击者利用，所以方案复杂一些。</p>
+<p>在APP中放入RSA公钥，应用启动的时候，证书信息通过私钥加密，发送给前端保存，前端把这个新证书和埋入的证书一起做锚点，进行验证。这样可以保证老APP可以使用一段时间。缺点是这个下发的机制要尽量安全可靠，有可能被攻击者利用，而且后续的请求需要依赖这个请求，所以方案复杂一些。</p>
 </blockquote>
 </blockquote>
 <p>方案2：只验证证书的公钥</p>
 <blockquote>
 <blockquote>
-<p>只使用证书的公钥进行验证，因为更换证书，一般是通过.csr文件生成crt证书文件的（也就是证书文件），在.csr文件没变的情况下，生成的证书的公钥是一致的，也就即使服务端更换了证书，只要公钥不变，依然可以通过验证。而中间人是没法通过公钥反推出私钥的，即使知道了公钥也没办法解密。所以验证公钥也是相对安全的。缺点是如果新的证书换了公钥还是出问题。我遇到的case就是需要更换私钥和证书算法，公钥也不一样了。</p>
+<p>只使用证书的公钥进行验证，因为更换证书，一般是通过.csr文件生成crt证书文件的（也就是证书文件），在.csr文件没变的情况下，生成的证书的公钥是一致的，也就即使服务端更换了证书，只要公钥不变，依然可以通过验证。所以验证公钥也是相对安全的。缺点是如果新的证书换了公钥还是出问题。我遇到的case就是需要更换私钥和证书算法，公钥也不一样了。</p>
 </blockquote>
 </blockquote>
 <p>其他不太靠谱的方案：</p>
