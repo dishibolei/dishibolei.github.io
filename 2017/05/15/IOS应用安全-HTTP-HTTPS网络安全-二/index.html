@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS," />
+  <meta name="keywords" content="安全,HTTPS,iOS,ATS,AFNetworking," />
 
 
 
@@ -92,19 +92,17 @@
 
 
 
-<meta name="description" content="good">
-<meta name="keywords" content="iOS">
+<meta name="description" content="ATSIOS9之后，苹果开启了App Transport Security（简称ATS）特性,即禁止HTTP请求，必须使用支持TLS1.2的HTTPS请求。但是也支持在Info.plist中做一些配置，来做缓冲。需要在info.plist中加入App Transport Security Settings字段。 ATS整体配置（NSAllowsArbitraryLoads） 配置ATS生效或不生效">
+<meta name="keywords" content="安全,HTTPS,iOS,ATS,AFNetworking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IOS应用安全-HTTP&#x2F;HTTPS网络安全(二)">
 <meta property="og:url" content="https://dishibolei.github.io/2017/05/15/IOS应用安全-HTTP-HTTPS网络安全-二/index.html">
 <meta property="og:site_name" content="萝卜的空间">
-<meta property="og:description" content="good">
-<meta property="og:image" content="https://dishibolei.github.io/2017/05/15/IOS应用安全-HTTP-HTTPS网络安全-二/image001.png">
-<meta property="og:updated_time" content="2017-05-15T05:58:15.000Z">
+<meta property="og:description" content="ATSIOS9之后，苹果开启了App Transport Security（简称ATS）特性,即禁止HTTP请求，必须使用支持TLS1.2的HTTPS请求。但是也支持在Info.plist中做一些配置，来做缓冲。需要在info.plist中加入App Transport Security Settings字段。 ATS整体配置（NSAllowsArbitraryLoads） 配置ATS生效或不生效">
+<meta property="og:updated_time" content="2017-05-15T09:54:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IOS应用安全-HTTP&#x2F;HTTPS网络安全(二)">
-<meta name="twitter:description" content="good">
-<meta name="twitter:image" content="https://dishibolei.github.io/2017/05/15/IOS应用安全-HTTP-HTTPS网络安全-二/image001.png">
+<meta name="twitter:description" content="ATSIOS9之后，苹果开启了App Transport Security（简称ATS）特性,即禁止HTTP请求，必须使用支持TLS1.2的HTTPS请求。但是也支持在Info.plist中做一些配置，来做缓冲。需要在info.plist中加入App Transport Security Settings字段。 ATS整体配置（NSAllowsArbitraryLoads） 配置ATS生效或不生效">
 
 
 
@@ -351,6 +349,39 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/安全/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -375,8 +406,76 @@
       
 
       
-        <p><img src="/2017/05/15/IOS应用安全-HTTP-HTTPS网络安全-二/image001.png" alt=""></p>
-<p>good</p>
+        <h1 id="ATS"><a href="#ATS" class="headerlink" title="ATS"></a>ATS</h1><p>IOS9之后，苹果开启了App Transport Security（简称ATS）特性,即<strong>禁止HTTP请求，必须使用支持</strong>TLS1.2<strong>的HTTPS请求</strong>。但是也支持在Info.plist中做一些配置，来做缓冲。需要在info.plist中加入<code>App Transport Security Settings</code>字段。</p>
+<h2 id="ATS整体配置（NSAllowsArbitraryLoads）"><a href="#ATS整体配置（NSAllowsArbitraryLoads）" class="headerlink" title="ATS整体配置（NSAllowsArbitraryLoads）"></a>ATS整体配置（NSAllowsArbitraryLoads）</h2><ol>
+<li><p>配置ATS生效或不生效</p>
+<p> 在<code>App Transport Security Settings</code>字段下加入<code>Allow Arbitrary Loads</code>，或<code>NSAllowsArbitraryLoads</code>，配置为NO。PS：如果要禁用则为YES。但是如果配置为YES会导致审核失败。</p>
+</li>
+<li><p>配置web(H5)访问限制生效或不生效 </p>
+<p>在<code>App Transport Security Settings</code>字段下加入<code>Allow Arbitrary Loads in Web Content</code>或<code>NSAllowsArbitraryLoadsInWebContent</code>，默认配置生效为NO。如果要容许访问任意web网页内容，配置为YES。</p>
+</li>
+<li><p>配置多媒体访问限制生效或不生效</p>
+<p>在<code>App Transport Security Settings</code>字段下加入<code>Allow Arbitrary Loads in Web Content</code>，默认配置生效为NO。设置YES，容许访问通过AVFoundation框架访问媒体内容。</p>
+</li>
+</ol>
+<h2 id="ATS根据域名配置（Exception-Domains）"><a href="#ATS根据域名配置（Exception-Domains）" class="headerlink" title="ATS根据域名配置（Exception Domains）"></a>ATS根据域名配置（Exception Domains）</h2><p>在<code>App Transport Security Settings</code>字段下加入<code>Exception Domains</code>或<code>NSExceptionDomains</code>,无论配置NSAllowsArbitraryLoads的值是什么，默认加入的域名都受到ATS限制。且配置的值覆盖整体配置的值。比如之前设置NSAllowsArbitraryLoadsInMedia为 YES，然而NSExceptionDomain所代表的域名依然不能访问不安全的媒体内容。</p>
+<ol>
+<li><p>加入域名配置</p>
+<p> 在<code>Exception Domains</code>下，添加字典。其中key为域名的名称，比如<code>baidu.com</code>。</p>
+</li>
+<li><p>容许访问HTTP</p>
+<p>在步骤1对应的域名字典下，加入字段<code>NSExceptionAllowsInsecureHTTPLoads</code>.默认为NO，如果设置YES，则容许访问HTTP</p>
+</li>
+<li><p>容许TLS支持非正向保密算法（Perfect Forward Secrecy）</p>
+<p> 在步骤1对应的域名字典下，加入字段<code>NSExceptionRequiresForwardSecrecy</code>.默认为YES。如果设置为NO，则支持非正向保密的加密算法。</p>
+<p>正向保密算法（Forward Secrecy），指如果通信密钥泄露，使用FS算法，可以保证这个密钥泄露只会影响之后的加密数据，之前的加密数据无法解密。主要防止攻击者保存之前的数据，等到私钥泄露之后再解密数据。这个算法的基础是基于椭圆曲线向前保密的秘钥交换算法ECDHE（Elliptic Curve Diffie-Hellman Ephemeral）。这些算法有：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</div><div class="line">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>如果设置为NO，则非正向保密算法有：
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">TLS_RSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_RSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_RSA_WITH_AES_256_CBC_SHA256</div><div class="line">TLS_RSA_WITH_AES_256_CBC_SHA</div><div class="line">TLS_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_RSA_WITH_AES_128_CBC_SHA</div></pre></td></tr></table></figure>
+
+
+具体原理参考[TLS/SSL 高级进阶](http://www.open-open.com/lib/view/open1477548899809.html)。
+</code></pre><ol>
+<li><p>容许支持低版本的TLS算法。   </p>
+<p>在步骤1对应的域名字典下，加入字段<code>NSExceptionMinimumTLSVersion</code>。值为对应的支持的最低版本。包含下面值</p>
+</li>
+</ol>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">TLSv1.0</div><div class="line">TLSv1.1</div><div class="line">TLSv1.2</div></pre></td></tr></table></figure>
+</code></pre><ol>
+<li><p>包含域名下的所有子域名。</p>
+<p>在步骤1对应的域名字典下，加入字段<code>NSIncludesSubdomains</code>。默认为NO。如果配置为YES则包含域名下的所有子域名。</p>
+</li>
+<li><p>开启Certificate Transparency</p>
+<p> 在步骤1对应的域名字典下，加入字段<code>NSRequiresCertificateTransparency</code>,这个默认为NO.如果设为YES，则开启Certificate Transparency。这个是IETF启动的一个开源项目，目的是进一步验证证书是否安全。个人觉得没什么用，没必要开启。</p>
+</li>
+</ol>
+<h2 id="各种字段含义说明"><a href="#各种字段含义说明" class="headerlink" title="各种字段含义说明"></a>各种字段含义说明</h2><p>plist里面的结构如下</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSAppTransportSecurity</span> : Dictionary &#123;</div><div class="line">    <span class="built_in">NSAllowsArbitraryLoads</span> : Boolean</div><div class="line">    <span class="built_in">NSAllowsArbitraryLoadsForMedia</span> : Boolean</div><div class="line">    <span class="built_in">NSAllowsArbitraryLoadsInWebContent</span> : Boolean</div><div class="line">    <span class="built_in">NSAllowsLocalNetworking</span> : Boolean</div><div class="line">    <span class="built_in">NSExceptionDomains</span> : Dictionary &#123;</div><div class="line">        &lt;domain-name-string&gt; : Dictionary &#123;</div><div class="line">            <span class="built_in">NSIncludesSubdomains</span> : Boolean</div><div class="line">            <span class="built_in">NSExceptionAllowsInsecureHTTPLoads</span> : Boolean</div><div class="line">            <span class="built_in">NSExceptionMinimumTLSVersion</span> : String</div><div class="line">            <span class="built_in">NSExceptionRequiresForwardSecrecy</span> : Boolean   <span class="comment">// Default value is YES</span></div><div class="line">            <span class="built_in">NSRequiresCertificateTransparency</span> : Boolean</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>主要的几个key：</p>
+<ul>
+<li><p>NSAllowsArbitraryLoads</p>
+<blockquote>
+<p>默认NO。如果设置为YES，则不生效ATS规则。但是配置在NSExceptionDomains里面的规则，按照里面的规则生效。配置为YES，提交APP Strore需要说明</p>
+</blockquote>
+</li>
+<li><p>NSAllowsArbitraryLoadsForMedia</p>
+<blockquote>
+<p>默认NO.如果设置为YES，那使用AVFoundation加载资源不生效ATS。</p>
+</blockquote>
+</li>
+<li><p>NSAllowsArbitraryLoadsInWebContent</p>
+<blockquote>
+</blockquote>
+</li>
+</ul>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li><a href="http://www.jianshu.com/p/36ddc5b009a7" target="_blank" rel="external">iOS 10 适配 ATS（app支持https通过App Store审核）</a></li>
+<li>[ATS 官方文档] (<a href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35" target="_blank" rel="external">https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35</a>)</li>
+<li></li>
+</ol>
 
       
     </div>
@@ -422,7 +521,15 @@
       
         <div class="post-tags">
           
+            <a href="/tags/安全/" rel="tag"># 安全</a>
+          
+            <a href="/tags/HTTPS/" rel="tag"># HTTPS</a>
+          
             <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/ATS/" rel="tag"># ATS</a>
+          
+            <a href="/tags/AFNetworking/" rel="tag"># AFNetworking</a>
           
         </div>
       
@@ -515,8 +622,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -542,7 +658,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -553,7 +669,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -610,6 +726,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ATS"><span class="nav-number">1.</span> <span class="nav-text">ATS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ATS整体配置（NSAllowsArbitraryLoads）"><span class="nav-number">1.1.</span> <span class="nav-text">ATS整体配置（NSAllowsArbitraryLoads）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ATS根据域名配置（Exception-Domains）"><span class="nav-number">1.2.</span> <span class="nav-text">ATS根据域名配置（Exception Domains）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种字段含义说明"><span class="nav-number">1.3.</span> <span class="nav-text">各种字段含义说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">2.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://dishibolei.github.io/"/>
-  <updated>2017-05-15T05:58:15.000Z</updated>
+  <updated>2017-05-15T09:54:04.000Z</updated>
   <id>https://dishibolei.github.io/</id>
   
   <author>
@@ -20,22 +20,100 @@
     <link href="https://dishibolei.github.io/2017/05/15/IOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8-HTTP-HTTPS%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E4%BA%8C/"/>
     <id>https://dishibolei.github.io/2017/05/15/IOS应用安全-HTTP-HTTPS网络安全-二/</id>
     <published>2017-05-15T04:46:53.000Z</published>
-    <updated>2017-05-15T05:58:15.000Z</updated>
+    <updated>2017-05-15T09:54:04.000Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="/2017/05/15/IOS应用安全-HTTP-HTTPS网络安全-二/image001.png" alt=""></p>
-<p>good</p>
+    <content type="html"><![CDATA[<h1 id="ATS"><a href="#ATS" class="headerlink" title="ATS"></a>ATS</h1><p>IOS9之后，苹果开启了App Transport Security（简称ATS）特性,即<strong>禁止HTTP请求，必须使用支持</strong>TLS1.2<strong>的HTTPS请求</strong>。但是也支持在Info.plist中做一些配置，来做缓冲。需要在info.plist中加入<code>App Transport Security Settings</code>字段。</p>
+<h2 id="ATS整体配置（NSAllowsArbitraryLoads）"><a href="#ATS整体配置（NSAllowsArbitraryLoads）" class="headerlink" title="ATS整体配置（NSAllowsArbitraryLoads）"></a>ATS整体配置（NSAllowsArbitraryLoads）</h2><ol>
+<li><p>配置ATS生效或不生效</p>
+<p> 在<code>App Transport Security Settings</code>字段下加入<code>Allow Arbitrary Loads</code>，或<code>NSAllowsArbitraryLoads</code>，配置为NO。PS：如果要禁用则为YES。但是如果配置为YES会导致审核失败。</p>
+</li>
+<li><p>配置web(H5)访问限制生效或不生效 </p>
+<p>在<code>App Transport Security Settings</code>字段下加入<code>Allow Arbitrary Loads in Web Content</code>或<code>NSAllowsArbitraryLoadsInWebContent</code>，默认配置生效为NO。如果要容许访问任意web网页内容，配置为YES。</p>
+</li>
+<li><p>配置多媒体访问限制生效或不生效</p>
+<p>在<code>App Transport Security Settings</code>字段下加入<code>Allow Arbitrary Loads in Web Content</code>，默认配置生效为NO。设置YES，容许访问通过AVFoundation框架访问媒体内容。</p>
+</li>
+</ol>
+<h2 id="ATS根据域名配置（Exception-Domains）"><a href="#ATS根据域名配置（Exception-Domains）" class="headerlink" title="ATS根据域名配置（Exception Domains）"></a>ATS根据域名配置（Exception Domains）</h2><p>在<code>App Transport Security Settings</code>字段下加入<code>Exception Domains</code>或<code>NSExceptionDomains</code>,无论配置NSAllowsArbitraryLoads的值是什么，默认加入的域名都受到ATS限制。且配置的值覆盖整体配置的值。比如之前设置NSAllowsArbitraryLoadsInMedia为 YES，然而NSExceptionDomain所代表的域名依然不能访问不安全的媒体内容。</p>
+<ol>
+<li><p>加入域名配置</p>
+<p> 在<code>Exception Domains</code>下，添加字典。其中key为域名的名称，比如<code>baidu.com</code>。</p>
+</li>
+<li><p>容许访问HTTP</p>
+<p>在步骤1对应的域名字典下，加入字段<code>NSExceptionAllowsInsecureHTTPLoads</code>.默认为NO，如果设置YES，则容许访问HTTP</p>
+</li>
+<li><p>容许TLS支持非正向保密算法（Perfect Forward Secrecy）</p>
+<p> 在步骤1对应的域名字典下，加入字段<code>NSExceptionRequiresForwardSecrecy</code>.默认为YES。如果设置为NO，则支持非正向保密的加密算法。</p>
+<p>正向保密算法（Forward Secrecy），指如果通信密钥泄露，使用FS算法，可以保证这个密钥泄露只会影响之后的加密数据，之前的加密数据无法解密。主要防止攻击者保存之前的数据，等到私钥泄露之后再解密数据。这个算法的基础是基于椭圆曲线向前保密的秘钥交换算法ECDHE（Elliptic Curve Diffie-Hellman Ephemeral）。这些算法有：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</div><div class="line">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>如果设置为NO，则非正向保密算法有：
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">TLS_RSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_RSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_RSA_WITH_AES_256_CBC_SHA256</div><div class="line">TLS_RSA_WITH_AES_256_CBC_SHA</div><div class="line">TLS_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_RSA_WITH_AES_128_CBC_SHA</div></pre></td></tr></table></figure>
+
+
+具体原理参考[TLS/SSL 高级进阶](http://www.open-open.com/lib/view/open1477548899809.html)。
+</code></pre><ol>
+<li><p>容许支持低版本的TLS算法。   </p>
+<p>在步骤1对应的域名字典下，加入字段<code>NSExceptionMinimumTLSVersion</code>。值为对应的支持的最低版本。包含下面值</p>
+</li>
+</ol>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">TLSv1.0</div><div class="line">TLSv1.1</div><div class="line">TLSv1.2</div></pre></td></tr></table></figure>
+</code></pre><ol>
+<li><p>包含域名下的所有子域名。</p>
+<p>在步骤1对应的域名字典下，加入字段<code>NSIncludesSubdomains</code>。默认为NO。如果配置为YES则包含域名下的所有子域名。</p>
+</li>
+<li><p>开启Certificate Transparency</p>
+<p> 在步骤1对应的域名字典下，加入字段<code>NSRequiresCertificateTransparency</code>,这个默认为NO.如果设为YES，则开启Certificate Transparency。这个是IETF启动的一个开源项目，目的是进一步验证证书是否安全。个人觉得没什么用，没必要开启。</p>
+</li>
+</ol>
+<h2 id="各种字段含义说明"><a href="#各种字段含义说明" class="headerlink" title="各种字段含义说明"></a>各种字段含义说明</h2><p>plist里面的结构如下</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSAppTransportSecurity</span> : Dictionary &#123;</div><div class="line">    <span class="built_in">NSAllowsArbitraryLoads</span> : Boolean</div><div class="line">    <span class="built_in">NSAllowsArbitraryLoadsForMedia</span> : Boolean</div><div class="line">    <span class="built_in">NSAllowsArbitraryLoadsInWebContent</span> : Boolean</div><div class="line">    <span class="built_in">NSAllowsLocalNetworking</span> : Boolean</div><div class="line">    <span class="built_in">NSExceptionDomains</span> : Dictionary &#123;</div><div class="line">        &lt;domain-name-string&gt; : Dictionary &#123;</div><div class="line">            <span class="built_in">NSIncludesSubdomains</span> : Boolean</div><div class="line">            <span class="built_in">NSExceptionAllowsInsecureHTTPLoads</span> : Boolean</div><div class="line">            <span class="built_in">NSExceptionMinimumTLSVersion</span> : String</div><div class="line">            <span class="built_in">NSExceptionRequiresForwardSecrecy</span> : Boolean   <span class="comment">// Default value is YES</span></div><div class="line">            <span class="built_in">NSRequiresCertificateTransparency</span> : Boolean</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>主要的几个key：</p>
+<ul>
+<li><p>NSAllowsArbitraryLoads</p>
+<blockquote>
+<p>默认NO。如果设置为YES，则不生效ATS规则。但是配置在NSExceptionDomains里面的规则，按照里面的规则生效。配置为YES，提交APP Strore需要说明</p>
+</blockquote>
+</li>
+<li><p>NSAllowsArbitraryLoadsForMedia</p>
+<blockquote>
+<p>默认NO.如果设置为YES，那使用AVFoundation加载资源不生效ATS。</p>
+</blockquote>
+</li>
+<li><p>NSAllowsArbitraryLoadsInWebContent</p>
+<blockquote>
+</blockquote>
+</li>
+</ul>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li><a href="http://www.jianshu.com/p/36ddc5b009a7" target="_blank" rel="external">iOS 10 适配 ATS（app支持https通过App Store审核）</a></li>
+<li>[ATS 官方文档] (<a href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35" target="_blank" rel="external">https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35</a>)</li>
+<li></li>
+</ol>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;/2017/05/15/IOS应用安全-HTTP-HTTPS网络安全-二/image001.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;good&lt;/p&gt;
-
+      &lt;h1 id=&quot;ATS&quot;&gt;&lt;a href=&quot;#ATS&quot; class=&quot;headerlink&quot; title=&quot;ATS&quot;&gt;&lt;/a&gt;ATS&lt;/h1&gt;&lt;p&gt;IOS9之后，苹果开启了App Transport Security（简称ATS）特性,即&lt;strong&gt;禁止HTTP请求，必须使用
     
     </summary>
     
+      <category term="iOS" scheme="https://dishibolei.github.io/categories/iOS/"/>
+    
+      <category term="安全" scheme="https://dishibolei.github.io/categories/iOS/%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="安全" scheme="https://dishibolei.github.io/tags/%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="HTTPS" scheme="https://dishibolei.github.io/tags/HTTPS/"/>
     
       <category term="iOS" scheme="https://dishibolei.github.io/tags/iOS/"/>
+    
+      <category term="ATS" scheme="https://dishibolei.github.io/tags/ATS/"/>
+    
+      <category term="AFNetworking" scheme="https://dishibolei.github.io/tags/AFNetworking/"/>
     
   </entry>
   
@@ -44,7 +122,7 @@
     <link href="https://dishibolei.github.io/2017/05/11/IOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8-HTTP-HTTPS%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E4%B8%80/"/>
     <id>https://dishibolei.github.io/2017/05/11/IOS应用安全-HTTP-HTTPS网络安全-一/</id>
     <published>2017-05-11T07:21:51.000Z</published>
-    <updated>2017-05-12T08:55:25.000Z</updated>
+    <updated>2017-05-15T08:26:08.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>导读：</p>
@@ -141,6 +219,7 @@
 <li>服务端拿到后，利用secret_key解密，然后利用同样的算法计算之前的握手消息的Hash值，如果能解密成功，且验证Hash值正确则说明客户端的加密算法和秘钥没问题。</li>
 <li>服务端再计算之前的握手消息的Hash值，利用secret_key做对称加密后发给客户端，客户端如果能够解密出来，且与自己计算的Hash值相同，则最后链接正式建立成功。</li>
 </ol>
+<p>注明：上面是以RSA为基础的秘钥加密流程，即需要客户端将随机数加密传输给后端。还有一种基于秘钥交换的形式，双方的对称秘钥是通过交换的参数本地的，不会通过信道传输，会更安全些。具体参考<a href="http://www.open-open.com/lib/view/open1477548899809.html" target="_blank" rel="external">TLS/SSL 高级进阶</a></p>
 <p>先简单说明几个概念，详细的会专门抽出来分享：</p>
 <ol>
 <li>对称加密：双方使用的秘钥是相同的，使用同一个秘钥进行加解密。</li>
@@ -413,6 +492,8 @@
 <li><p><a href="http://blog.csdn.net/sdcxyz/article/details/47220129" target="_blank" rel="external">自签名证书和私有CA签名的证书的区别 创建自签名证书 创建私有CA 证书类型 证书扩展名</a></p>
 </li>
 <li><p><a href="https://www.zybuluo.com/qidiandasheng/note/713956" target="_blank" rel="external">深入解析HTTPS</a></p>
+</li>
+<li><p><a href="http://www.open-open.com/lib/view/open1477548899809.html" target="_blank" rel="external">TLS/SSL 高级进阶</a></p>
 </li>
 </ol>
 ]]></content>
