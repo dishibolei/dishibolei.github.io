@@ -4,6 +4,36 @@
 
     
   <url>
+    <loc>https://dishibolei.github.io/2017/05/15/IOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8-HTTP-HTTPS%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E4%BA%8C/</loc>
+    <lastmod>2017-05-15T03:38:13.000Z</lastmod>
+    <data>
+        <display>
+        <title>IOS应用安全-HTTP/HTTPS网络安全(二)</title>
+        <pubTime>2017-05-15T02:56:18.000Z</pubTime>
+        
+        <tag>iOS</tag>
+         
+        <tag>安全</tag>
+         
+        <tag>HTTPS</tag>
+         
+        <tag>AFNetworking</tag>
+         
+         
+           
+             
+              <breadCrumb title="安全" url="https://dishibolei.github.io/categories/%E5%AE%89%E5%85%A8/"/>
+          
+             
+              <breadCrumb title="网络" url="https://dishibolei.github.io/categories/%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
     <loc>https://dishibolei.github.io/2017/05/11/IOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8-HTTP-HTTPS%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E4%B8%80/</loc>
     <lastmod>2017-05-12T08:55:25.000Z</lastmod>
     <data>
@@ -26,7 +56,6 @@
     </data>
     </url>
 
-    
     
     
 </urlset>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://dishibolei.github.io/"/>
-  <updated>2017-05-12T08:55:25.000Z</updated>
+  <updated>2017-05-15T03:38:13.000Z</updated>
   <id>https://dishibolei.github.io/</id>
   
   <author>
@@ -14,6 +14,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>IOS应用安全-HTTP/HTTPS网络安全(二)</title>
+    <link href="https://dishibolei.github.io/2017/05/15/IOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8-HTTP-HTTPS%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E4%BA%8C/"/>
+    <id>https://dishibolei.github.io/2017/05/15/IOS应用安全-HTTP-HTTPS网络安全-二/</id>
+    <published>2017-05-15T02:56:18.000Z</published>
+    <updated>2017-05-15T03:38:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>导读：</p>
+<p>在IOS应用安全-HTTP/HTTPS网络安全(一)中讲了，HTTPS安全相关的知识。这一章，主要从代码层面，讲解怎么正确配置HTTPS。</p>
+</blockquote>
+<h2 id="ATS-配置"><a href="#ATS-配置" class="headerlink" title="ATS 配置"></a>ATS 配置</h2><p><img src="/source/img/QQ20170306-0.png" alt="QQ20170306-0"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;导读：&lt;/p&gt;
+&lt;p&gt;在IOS应用安全-HTTP/HTTPS网络安全(一)中讲了，HTTPS安全相关的知识。这一章，主要从代码层面，讲解怎么正确配置HTTPS。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;ATS-配置&quot;&gt;&lt;a href=&quot;
+    
+    </summary>
+    
+      <category term="安全" scheme="https://dishibolei.github.io/categories/%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="网络" scheme="https://dishibolei.github.io/categories/%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="iOS" scheme="https://dishibolei.github.io/tags/iOS/"/>
+    
+      <category term="安全" scheme="https://dishibolei.github.io/tags/%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="HTTPS" scheme="https://dishibolei.github.io/tags/HTTPS/"/>
+    
+      <category term="AFNetworking" scheme="https://dishibolei.github.io/tags/AFNetworking/"/>
+    
+  </entry>
   
   <entry>
     <title>IOS应用安全-HTTP/HTTPS网络安全(一)</title>
