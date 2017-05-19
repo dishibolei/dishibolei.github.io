@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="萝卜的空间">
 <meta property="og:description" content="导读 本文主要讲解IOS中ATS相关的配置说明和使用AFNetworking框架来实现证书验证的方法。讲解了AFNetworking各个配置试用的场景和注意点。">
 <meta property="og:image" content="https://dishibolei.github.io/https-safe-2/safe_af_ssl.png">
-<meta property="og:updated_time" content="2017-05-19T05:22:05.000Z">
+<meta property="og:updated_time" content="2017-05-19T05:42:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IOS应用安全-HTTP&#x2F;HTTPS网络安全(二)">
 <meta name="twitter:description" content="导读 本文主要讲解IOS中ATS相关的配置说明和使用AFNetworking框架来实现证书验证的方法。讲解了AFNetworking各个配置试用的场景和注意点。">
@@ -436,24 +436,17 @@
 <p>在步骤1对应的域名字典下，加入字段<code>NSExceptionAllowsInsecureHTTPLoads</code>.默认为NO，如果设置YES，则容许访问HTTP</p>
 </li>
 <li><p>容许TLS支持非正向保密算法（Perfect Forward Secrecy）</p>
-<p> 在步骤1对应的域名字典下，加入字段<code>NSExceptionRequiresForwardSecrecy</code>.默认为YES。如果设置为NO，则支持非正向保密的加密算法。</p>
+<p>在步骤1对应的域名字典下，加入字段<code>NSExceptionRequiresForwardSecrecy</code>.默认为YES。如果设置为NO，则支持非正向保密的加密算法。</p>
 <p>正向保密算法（Forward Secrecy），指如果通信密钥泄露，使用FS算法，可以保证这个密钥泄露只会影响之后的加密数据，之前的加密数据无法解密。主要防止攻击者保存之前的数据，等到私钥泄露之后再解密数据。这个算法的基础是基于椭圆曲线向前保密的秘钥交换算法ECDHE（Elliptic Curve Diffie-Hellman Ephemeral）。这些算法有：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</div><div class="line">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<pre><code>如果设置为NO，则非正向保密算法，有下面几种：
-
+<p>如果设置为NO，则非正向保密算法，有下面几种：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">TLS_RSA_WITH_AES_256_GCM_SHA384</div><div class="line">TLS_RSA_WITH_AES_128_GCM_SHA256</div><div class="line">TLS_RSA_WITH_AES_256_CBC_SHA256</div><div class="line">TLS_RSA_WITH_AES_256_CBC_SHA</div><div class="line">TLS_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">TLS_RSA_WITH_AES_128_CBC_SHA</div></pre></td></tr></table></figure>
-
-
-具体原理参考[TLS/SSL 高级进阶](http://www.open-open.com/lib/view/open1477548899809.html)。
-</code></pre><ol>
+<p>具体原理参考<a href="http://www.open-open.com/lib/view/open1477548899809.html" target="_blank" rel="external">TLS/SSL 高级进阶</a>。</p>
+</li>
 <li><p>容许支持低版本的TLS算法。   </p>
 <p>在步骤1对应的域名字典下，加入字段<code>NSExceptionMinimumTLSVersion</code>。值为对应的支持的最低版本。包含下面值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">TLSv1.0</div><div class="line">TLSv1.1</div><div class="line">TLSv1.2</div></pre></td></tr></table></figure>
 </li>
-</ol>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">TLSv1.0</div><div class="line">TLSv1.1</div><div class="line">TLSv1.2</div></pre></td></tr></table></figure>
-</code></pre><ol>
 <li><p>包含域名下的所有子域名。</p>
 <p>在步骤1对应的域名字典下，加入字段<code>NSIncludesSubdomains</code>。默认为NO。如果配置为YES则包含域名下的所有子域名。</p>
 </li>
@@ -516,7 +509,7 @@
 <p>推荐的一个配置：</p>
 <p>自己的域名使用最安全的方案，防止被苹果拒绝。第三方可以按照需求配置，但是审核时也建议进一步说明。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">NSAppTransportSecurity</div><div class="line">    NSExceptionDomains</div><div class="line">        &quot;domain-i-control.example.com&quot; // 后台的域名</div><div class="line">            NSExceptionAllowsInsecureHTTPLoads = NO //不容许HTTP</div><div class="line">            NSExceptionRequiresForwardSecrecy = YES //支持正向加密</div><div class="line">            NSExceptionMinimumTLSVersion = &quot;TLSv1.2&quot; //使用1.2版本</div><div class="line">            NSIncludesSubdomains = YES //包含子域名</div><div class="line">        &quot;other-domain-i-control.example.com&quot; //部分不支持的第三方域名</div><div class="line">            NSExceptionAllowsInsecureHTTPLoads = NO  //支持http</div><div class="line">            NSExceptionRequiresForwardSecrecy = YES  //不支持正向加密</div><div class="line">            NSExceptionMinimumTLSVersion = &quot;TLSv1.0&quot; //第三方支持的TLS版本</div><div class="line">    NSAllowsArbitraryLoads = NO</div></pre></td></tr></table></figure>
-<h1 id="使用AFNetworking配置HTTPS安全"><a href="#使用AFNetworking配置HTTPS安全" class="headerlink" title="使用AFNetworking配置HTTPS安全"></a>使用AFNetworking配置HTTPS安全</h1><p>AFNetworking是最常用的网络框架。所以以这个为基础说明一些配置信息。本人是使用2.6版本的，2.6及3.x版本，安全验证的逻辑没有变化，可以参考，2.6之前的版本，建议配置项显示配置，不要用默认配置（因为有个版本有漏洞，默认不校验域名）。下面先讲解下配置参数，清楚之后再讲解代码实现。</p>
+<h1 id="使用AFNetworking配置HTTPS安全"><a href="#使用AFNetworking配置HTTPS安全" class="headerlink" title="使用AFNetworking配置HTTPS安全"></a>使用AFNetworking配置HTTPS安全</h1><p>AFNetworking是最常用的网络框架。所以以这个为基础说明一些配置信息。本人是使用2.6版本的。3.x版本和2.6相比安全验证的逻辑没有变化，可以参考。2.6之前的版本，建议所有配置项显示配置，不要用默认配置（因为有个版本有漏洞，默认不校验域名）。下面先讲解下配置参数，清楚之后再讲解代码实现。</p>
 <h2 id="AFSecurityPolicy说明"><a href="#AFSecurityPolicy说明" class="headerlink" title="AFSecurityPolicy说明"></a>AFSecurityPolicy说明</h2><p>AFNetworking使用<code>AFSecurityPolicy</code>类来管理安全策略。</p>
 <p>主要的属性和方法：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) AFSSLPinningMode SSLPinningMode; <span class="comment">//证书验证的策略</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span> allowInvalidCertificates; <span class="comment">//是否容许无效的证书</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span> validatesDomainName; <span class="comment">//是否验证证书的域名</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, <span class="keyword">nullable</span>) <span class="built_in">NSArray</span> *pinnedCertificates; <span class="comment">//app自己导入的证书文件，默认情况下主bundle里面的.cer文件都会导入到这个数组里。</span></div></pre></td></tr></table></figure>
@@ -533,22 +526,19 @@
 <h3 id="SSLPinningMode-说明"><a href="#SSLPinningMode-说明" class="headerlink" title="SSLPinningMode 说明"></a>SSLPinningMode 说明</h3><p>证书文件实体验证策略，默认为AFSSLPinningModeNone。AFSSLPinningMode包括的值为：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, AFSSLPinningMode) &#123;</div><div class="line">    AFSSLPinningModeNone,</div><div class="line">    AFSSLPinningModePublicKey,</div><div class="line">    AFSSLPinningModeCertificate</div><div class="line">    </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>AFSSLPinningModeNone。AFNetworking默认配置模式。采用的策略为：</p>
-<ol>
+<li>AFSSLPinningModeNone。AFNetworking默认配置模式。采用的策略为：<ol>
 <li>如果容许无效证书（allowInvalidCertificates == YES），则直接返回验证成功（YES）</li>
-<li>如果不容许无效证书（allowInvalidCertificates == YES），则验证证书是否有效：是否是CA颁发机构颁发的或者是否是系统信任的第三方证书（比如手动信任Charles证书）。如果另外配置了validatesDomainName == YES，则需要证书对应的域名是否匹配。如果配置了validatesDomainName == NO,则不验证证书对应的域名是否匹配。  </li>
+<li>如果不容许无效证书（allowInvalidCertificates == YES），则验证证书是否有效：是否是CA颁发机构颁发的或者是否是系统信任的第三方证书（比如手动信任Charles证书）。如果另外配置了validatesDomainName == YES，则需要证书对应的域名是否匹配。如果配置了validatesDomainName == NO,则不验证证书对应的域名是否匹配。 </li>
 </ol>
 </li>
-<li><p>AFSSLPinningModePublicKey。验证证书公钥模式。采用的策略为：</p>
-<ol>
+<li>AFSSLPinningModePublicKey。验证证书公钥模式。采用的策略为：<ol>
 <li>如果容许无效证书（allowInvalidCertificates == YES），则比对服务端发来的证书链中的公钥和自己加入的所有证书的的公钥是否匹配，只要有一个证书匹配就返回成功。</li>
 <li>如果不容许无效证书（allowInvalidCertificates == YES），则先验证证书是否有效：是否是CA颁发机构颁发的或者是否是系统信任的第三方证书（比如手动信任Charles证书）。如果另外配置了validatesDomainName == YES，则需要证书对应的域名是否匹配。如果配置了validatesDomainName == NO,则不验证证书对应的域名是否匹配。验证通过后，则比对服务端发来的证书链中的公钥和自己加入的所有证书的的公钥是否匹配，只要有一个证书匹配就返回成功。   </li>
 </ol>
 </li>
-<li><p>AFSSLPinningModeCertificate。证书完全匹配模式。采用的策略为：</p>
-<ol>
+<li>AFSSLPinningModeCertificate。证书完全匹配模式。采用的策略为：<ol>
 <li>如果容许无效证书（allowInvalidCertificates == YES），则将自己导入的所有证书作为锚点，判断服务端是否有效。如果有效，判断服务端证书链中的证书中，是否有证书包含在导入的证书里（使用二进制比较，也就是必须完全一样）。</li>
-<li>如果不容许无效证书（allowInvalidCertificates == YES），则先验证证书是否有效：是否是CA颁发机构颁发的或者是否是系统信任的第三方证书（比如手动信任Charles证书）。如果另外配置了validatesDomainName == YES，则需要证书对应的域名是否匹配。如果配置了validatesDomainName == NO,则不验证证书对应的域名是否匹配。验证通过后，则将自己导入的所有证书作为锚点，判断服务端是否有效。如果有效，判断服务端证书链中的证书中，是否有证书包含在导入的证书里（使用二进制比较，也就是必须完全一样）。</li>
+<li>如果不容许无效证书（allowInvalidCertificates == YES），则先验证证书是否有效：是否是CA颁发机构颁发的或者是否是系统信任的第三方证书（比如手动信任Charles证书）。如果另外配置了validatesDomainName == YES，则需要证书对应的域名是否匹配。如果配置了validatesDomainName == NO,则不验证证书对应的域名是否匹配。验证通过后，则将自己导入的所有证书作为锚点，判断服务端证书是否有效。如果有效，判断服务端证书链中的证书中，是否有证书包含在导入的证书里（使用二进制比较，也就是必须完全一样）。</li>
 </ol>
 </li>
 </ul>
@@ -662,7 +652,6 @@
 <ol>
 <li><p>如何选择合适的方案?</p>
 <blockquote>
-<blockquote>
 <ol>
 <li>建议对安全没有特别要求的或在测试环境下方便抓包，采用默认规则就可以了，重要的数据单独做加密。即选场景1</li>
 <li>要校验域名，即：validatesDomainName不要设置为NO。如果设为NO，不校验域名，也最好自己加一层验证方法。</li>
@@ -672,11 +661,8 @@
 <li>最安全的方案是7。也就是强校验，漏洞最少，安全防护最高。但是必须考虑证书失效更换的问题。</li>
 </ol>
 </blockquote>
-</blockquote>
 </li>
-<li><p>如何防止证书过期导致不过的问题？</p>
-<p>有以下方案：</p>
-<blockquote>
+<li><p>如何防止证书过期导致不过的问题？<br>有以下方案：</p>
 <blockquote>
 <ol>
 <li>可以用场景6，<strong>保证后续更换的证书公钥不变化就可以了</strong></li>
@@ -684,10 +670,8 @@
 <li>加入证书更新的通道，每次应用启动的时候访问，查看是否有证书更新，如果有就去下载证书。</li>
 </ol>
 </blockquote>
-</blockquote>
 </li>
 <li><p>证书更新有什么方案？</p>
-<blockquote>
 <blockquote>
 <ol>
 <li>建议启动检查是否有证书更新，可以合并在检查APP更新或热更新里面。</li>
@@ -695,20 +679,15 @@
 <li>客户端将下载的文件按照签名等规则保存。下次加载前，继续对文件验证签名，保证没有篡改。</li>
 </ol>
 </blockquote>
-</blockquote>
 </li>
 <li><p>对于场景9，容许无效的证书，使用AFSSLPinningModeCertificate模式，为什么说明里面还说会验证证书过期？</p>
 <blockquote>
-<blockquote>
 <p>我个人也不确定，但是这个模式在加入证书锚点后，代码里还是会调用<code>AFServerTrustIsValid()</code>方法，然后再匹配证书数据是否一致。这个<code>AFServerTrustIsValid()</code>最终调用的是系统验证的方法，不确定系统是否还是会验证有效期，还是只验证包含证书就可以了，目前没有手段验证，大概率认为系统还是会验证是否过期。所以相对来说验证AFSSLPinningModePublicKey需要考虑更新的情况更少。</p>
-</blockquote>
 </blockquote>
 </li>
 <li><p>如果使用AFSSLPinningModePublicKey模式，更换证书怎么保证公钥不变？</p>
 <blockquote>
-<blockquote>
 <p>参考上一篇文章的附录，有一步是使用私钥<code>.key</code>文件生成<code>.csr</code>。只要<code>.key</code>和<code>.csr</code>，下次签发的时候直接用这两文件，签发就可以了。这样能保证下次的证书公钥也不变化。建议生产私钥的时候使用位数在2048位以上，可以保证安全性。</p>
-</blockquote>
 </blockquote>
 </li>
 </ol>
