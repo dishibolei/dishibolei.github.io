@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://dishibolei.github.io/"/>
-  <updated>2017-07-21T02:21:18.000Z</updated>
+  <updated>2017-07-21T02:29:02.000Z</updated>
   <id>https://dishibolei.github.io/</id>
   
   <author>
@@ -20,13 +20,14 @@
     <link href="https://dishibolei.github.io/2017/06/26/safe-hard-code/"/>
     <id>https://dishibolei.github.io/2017/06/26/safe-hard-code/</id>
     <published>2017-06-26T03:31:36.000Z</published>
-    <updated>2017-07-21T02:21:18.000Z</updated>
+    <updated>2017-07-21T02:29:02.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <blockquote>
 <p>导读<br>程序中经常用到需要用对称加密算法加解密，通常的做法是在代码中写死，硬编码到代码里。但是通过工具分析代码，是可以看到编码信息的，所以安全的做法是做一次变换，再硬编码进去。</p>
 </blockquote>
 </blockquote>
+<a id="more"></a>
 <p>秘钥硬编码是常见的安全问题。攻击者拿到编译后的包后，经过分析是可以拿到所有使用到的字符串的（可以使用ida），很容易泄露对称秘钥，导致安全问题。(非对称算法的公钥是可以公开的)</p>
 <p>最安全的解决方案是：对称秘钥按照会话随机生成。通过非对称的（比如RSA）算法，两边交换秘钥。</p>
 <p>不过大部分场景还是需要把秘钥写在程序中的，对称秘钥如何存储一直是安全的大难题，<strong>目前没有什么方案可以保证安全存储对称秘钥的方案，相关的方案只是增加了破解难度而已</strong>。</p>
@@ -65,7 +66,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;导读&lt;br&gt;程序中经常用到需要用对称加密算法加解密，通常的做法是在代码中写死，硬编码到代码里。但是通过工具分析代码，是可以看到编码信息的，所以安全的做法是做一次变换，再硬编码进去。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;/
+&lt;/blockquote&gt;
     
     </summary>
     
