@@ -309,6 +309,174 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://dishibolei.github.io/2017/06/26/safe-hard-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bolei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜的空间">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/26/safe-hard-code/" itemprop="url">安全-秘钥硬编码解决</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-26T11:31:36+08:00">
+                2017-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/安全/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<blockquote>
+<p>导读<br>程序中经常用到需要用对称加密算法加解密，通常的做法是在代码中写死，硬编码到代码里。但是通过工具分析代码，是可以看到编码信息的，所以安全的做法是做一次变换，再硬编码进去。</p>
+</blockquote>
+</blockquote>
+<p>秘钥硬编码是常见的安全问题。攻击者拿到编译后的包后，经过分析是可以拿到所有使用到的字符串的（可以使用ida），很容易泄露对称秘钥，导致安全问题。(非对称算法的公钥是可以公开的)</p>
+<p>最安全的解决方案是：对称秘钥按照会话随机生成。通过非对称的（比如RSA）算法，两边交换秘钥。</p>
+<p>不过大部分场景还是需要把秘钥写在程序中的，对称秘钥如何存储一直是安全的大难题，<strong>目前没有什么方案可以保证安全存储对称秘钥的方案，相关的方案只是增加了破解难度而已</strong>。</p>
+<p>相对安全的方案是：对秘钥进行变换。</p>
+<p>使用的数学方法有：</p>
+<ul>
+<li>移位和循环移位<br>　　移位就是将一段数码按照规定的位数整体性地左移或右移。循环右移就是当右移时，把数码的最后的位移到数码的最前头，循环左移正相反。例如，对十进制数码12345678循环右移1位（十进制位）的结果为81234567，而循环左移1位的结果则为23456781。</li>
+<li>置换<br>　　就是将数码中的某一位的值根据置换表的规定，用另一位代替。它不像移位操作那样整齐有序，看上去杂乱无章。这正是加密所需,被经常应用。</li>
+<li>扩展<br>　　就是将一段数码扩展成比原来位数更长的数码。扩展方法有多种,例如,可以用置换的方法，以扩展置换表来规定扩展后的数码每一位的替代值。</li>
+<li>压缩<br>　　就是将一段数码压缩成比原来位数更短的数码。压缩方法有多种，例如，也可以用置换的方法，以表来规定压缩后的数码每一位的替代值。</li>
+<li>异或<br>　　这是一种二进制布尔代数运算。异或的数学符号为⊕ ，它的运算法则如下：<br>1⊕1 = 0<br>0⊕0 = 0<br>1⊕0 = 1<br>0⊕1 = 1<br>　　也可以简单地理解为，参与异或运算的两数位如相等，则结果为0，不等则为1。</li>
+<li>迭代<br>　　迭代就是多次重复相同的运算，这在密码算法中经常使用，以使得形成的密文更加难以破解。</li>
+</ul>
+<p>通常是对秘钥进行变形，然后程序里面提供相关接口在运算过程中获取真实的秘钥。下面是几种常见的简单方案：</p>
+<h2 id="方案1：使用RSA加密保存"><a href="#方案1：使用RSA加密保存" class="headerlink" title="方案1：使用RSA加密保存"></a>方案1：使用RSA加密保存</h2><p>方案很简单，使用RSA的私钥进行加密，RSA的公钥写死在客户端里，使用的时候使用RSA进行一次解密操作。</p>
+<p>优点： 简单容易实现，一般项目里都需要使用非对称的加密方法，利用公开的秘钥做一次解密。<br>缺点： 如果知道了算法很容易破解。</p>
+<h2 id="方案2：使用Base64进行编码，再保存"><a href="#方案2：使用Base64进行编码，再保存" class="headerlink" title="方案2：使用Base64进行编码，再保存"></a>方案2：使用Base64进行编码，再保存</h2><p>对秘钥进行Base64编码，然后再解码。</p>
+<h2 id="方案3：使用AES再次加密"><a href="#方案3：使用AES再次加密" class="headerlink" title="方案3：使用AES再次加密"></a>方案3：使用AES再次加密</h2><p>再使用一次对称加密，两次不要使用相同的秘钥</p>
+<h2 id="方案4：自定义方案"><a href="#方案4：自定义方案" class="headerlink" title="方案4：自定义方案"></a>方案4：自定义方案</h2><p>下面给一个方案，对数据进行变形。算法如下：</p>
+<ol>
+<li>对每一个字节做一次循环右移</li>
+<li>对每一个字节用一个表的数据做位异或操作</li>
+<li>转为16进制数</li>
+</ol>
+<p>相关代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Utils.m</span></div><div class="line"><span class="comment">//  Safe</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by bolei on 2017/7/18.</span></div><div class="line"><span class="comment">//  Copyright © 2017年 bolei. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"Utils.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"NSData+HexString.h"</span></span></div><div class="line"></div><div class="line"><span class="comment">//使用自己的映射表</span></div><div class="line"><span class="keyword">char</span> changeMap[<span class="number">16</span>] = &#123;<span class="string">'w'</span>,<span class="string">'o'</span>,<span class="string">'s'</span>,<span class="string">'h'</span>,<span class="string">'i'</span>,<span class="string">'b'</span>,<span class="string">'o'</span>,<span class="string">'l'</span>,<span class="string">'e'</span>,<span class="string">'i'</span>,<span class="string">'s'</span>,<span class="string">'h'</span>,<span class="string">'a'</span>,<span class="string">'i'</span>,<span class="string">'g'</span>,<span class="string">'e'</span>&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Utils</span></span></div><div class="line"></div><div class="line">+ (<span class="built_in">NSString</span> *)hardKeyEncode:(<span class="built_in">NSString</span> *)key &#123;</div><div class="line">    <span class="keyword">if</span> ([key length] == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">@""</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSData</span> *data = [key dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> i, len;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *bytes;</div><div class="line">    </div><div class="line">    len = data.length;</div><div class="line">    bytes = (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)data.bytes;</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">        <span class="built_in">NSUInteger</span> index = i % <span class="number">16</span>;</div><div class="line">        <span class="keyword">unsigned</span> <span class="keyword">char</span> p = bytes[i];</div><div class="line">        p = (p &lt;&lt; <span class="number">7</span> || p &gt;&gt; <span class="number">1</span>); <span class="comment">//公式：循环左移n位： (x&gt;&gt;(N - n) ) | (x&lt;&lt;n)；循环右移n位： (x&lt;&lt;(N - n) ) | (x&gt;&gt;n)。</span></div><div class="line">        p ^= changeMap[index];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSData</span> *changeData = [<span class="built_in">NSData</span> dataWithBytes:bytes length:len];</div><div class="line">    <span class="built_in">NSString</span> *keyHex = [data hexStringFromData:changeData];</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> keyHex;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">+ (<span class="built_in">NSString</span> *)hardKeyDecode:(<span class="built_in">NSString</span> *)key &#123;</div><div class="line">    <span class="keyword">if</span> ([key length] == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">@""</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataFromHexString:key];</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ([data length] == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">@""</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> i, len;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *bytes;</div><div class="line">    </div><div class="line">    len = data.length;</div><div class="line">    bytes = (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)data.bytes;</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">        <span class="built_in">NSUInteger</span> index = i % <span class="number">16</span>;</div><div class="line">        <span class="keyword">unsigned</span> <span class="keyword">char</span> p = bytes[i];</div><div class="line">        p = (p &gt;&gt; <span class="number">7</span> || p &lt;&lt; <span class="number">1</span>); <span class="comment">//公式：循环左移n位： (x&gt;&gt;(N - n) ) | (x&lt;&lt;n)；循环右移n位： (x&lt;&lt;(N - n) ) | (x&gt;&gt;n)。</span></div><div class="line">        p ^= changeMap[index];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSData</span> *changeData = [<span class="built_in">NSData</span> dataWithBytes:bytes length:len];</div><div class="line">    <span class="built_in">NSString</span> *result = [<span class="built_in">NSString</span> stringWithUTF8String:changeData.bytes];</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="http://book.2cto.com/201506/52301.html" target="_blank" rel="external">IDA使用</a></li>
+<li><a href="http://blog.csdn.net/jaccty/article/details/52471196" target="_blank" rel="external">IOS安全– 字符串加密那点小事</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://dishibolei.github.io/2017/05/25/save-encode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -782,7 +950,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
