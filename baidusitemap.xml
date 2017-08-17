@@ -4,8 +4,25 @@
 
     
   <url>
+    <loc>https://dishibolei.github.io/2017/08/17/safe-backgroud-blurry/</loc>
+    <lastmod>2017-08-17T09:46:02.000Z</lastmod>
+    <data>
+        <display>
+        <title>safe_backgroud_blurry</title>
+        <pubTime>2017-08-17T03:56:40.000Z</pubTime>
+        
+        <tag>iOS</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://dishibolei.github.io/2017/06/26/safe-hard-code/</loc>
-    <lastmod>2017-07-21T02:29:02.000Z</lastmod>
+    <lastmod>2017-07-21T02:30:10.000Z</lastmod>
     <data>
         <display>
         <title>安全-秘钥硬编码解决</title>
@@ -31,9 +48,9 @@
         <title>IOS应用安全-加解密算法简述</title>
         <pubTime>2017-05-25T05:54:41.000Z</pubTime>
         
-        <tag>安全</tag>
-         
         <tag>iOS</tag>
+         
+        <tag>安全</tag>
          
         <tag>加解密</tag>
          
@@ -67,11 +84,11 @@
         <title>IOS应用安全-HTTP/HTTPS网络安全(二)</title>
         <pubTime>2017-05-15T04:46:53.000Z</pubTime>
         
+        <tag>iOS</tag>
+         
         <tag>安全</tag>
          
         <tag>HTTPS</tag>
-         
-        <tag>iOS</tag>
          
         <tag>ATS</tag>
          
