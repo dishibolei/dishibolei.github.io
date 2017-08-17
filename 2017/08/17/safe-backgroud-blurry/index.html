@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="萝卜的空间">
 <meta property="og:description" content="导读我们在双击切换到后台的时候，背景会有缩略图，而缩略图会暴漏用户的部分敏感数据，所以要求切换到后台后，缩略图需要做毛玻璃模糊处理。一些银行类的应用会要求这么做。比如招商银行。">
 <meta property="og:image" content="https://dishibolei.github.io/2017/08/17/safe-backgroud-blurry/blurry_bg.jpeg">
-<meta property="og:updated_time" content="2017-08-17T09:52:24.000Z">
+<meta property="og:updated_time" content="2017-08-17T09:54:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS安全-切换后台背景模糊">
 <meta name="twitter:description" content="导读我们在双击切换到后台的时候，背景会有缩略图，而缩略图会暴漏用户的部分敏感数据，所以要求切换到后台后，缩略图需要做毛玻璃模糊处理。一些银行类的应用会要求这么做。比如招商银行。">
@@ -415,7 +415,7 @@
 <li>applicationWillEnterForeground 将要回到前台的时候调用</li>
 <li>applicationDidBecomeActive 已经到前台后调用</li>
 </ul>
-<p>其中先把应用点击home，切换到后台，四个状态都会调用。但是双击home的话只会调用applicationWillResignActive和applicationDidBecomeActive</p>
+<p>其中点击home，切换到后台，四个状态都会调用。但是双击home的话只会调用applicationWillResignActive和applicationDidBecomeActive</p>
 <p>一般调用显示和消失需要成对调用。所以两个方案：</p>
 <ul>
 <li>方案1：applicationWillResignActive调用消失，然后applicationWillEnterForeground调用显示</li>
