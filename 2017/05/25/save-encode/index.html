@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS,安全,加解密,字符编码,大小端,国密算法,HASH,对称加密,非对称加密," />
+  <meta name="keywords" content="安全,iOS,加解密,字符编码,大小端,国密算法,HASH,对称加密,非对称加密," />
 
 
 
@@ -93,7 +93,7 @@
 
 
 <meta name="description" content="导读客户端经常遇到需要对数据进行加密的情况，那应该如何加密，选用什么样的加密算法，是本文想要讨论的问题。">
-<meta name="keywords" content="iOS,安全,加解密,字符编码,大小端,国密算法,HASH,对称加密,非对称加密">
+<meta name="keywords" content="安全,iOS,加解密,字符编码,大小端,国密算法,HASH,对称加密,非对称加密">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IOS应用安全-加解密算法简述">
 <meta property="og:url" content="https://dishibolei.github.io/2017/05/25/save-encode/index.html">
@@ -103,7 +103,7 @@
 <meta property="og:image" content="https://dishibolei.github.io/2017/05/25/save-encode/base_64.jpeg">
 <meta property="og:image" content="https://dishibolei.github.io/2017/05/25/save-encode/safe_encode_sm2.jpg">
 <meta property="og:image" content="https://dishibolei.github.io/2017/05/25/save-encode/safe_decode_sm2.jpg">
-<meta property="og:updated_time" content="2017-06-02T02:22:05.000Z">
+<meta property="og:updated_time" content="2017-08-24T06:23:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IOS应用安全-加解密算法简述">
 <meta name="twitter:description" content="导读客户端经常遇到需要对数据进行加密的情况，那应该如何加密，选用什么样的加密算法，是本文想要讨论的问题。">
@@ -430,7 +430,7 @@
 <p>对于UTF-8编码的文件，会在文件头写入<code>EF BB BF</code>,表明是UTF-8编码。</p>
 <h2 id="UTF-16-（NSUTF16StringEncoding）"><a href="#UTF-16-（NSUTF16StringEncoding）" class="headerlink" title="UTF-16 （NSUTF16StringEncoding）"></a>UTF-16 （NSUTF16StringEncoding）</h2><p>UTF-16的编码方法是：</p>
 <ul>
-<li>如果二进制流b小于0x10000，也就是十进制的0到65535之内，则直接使用两字节表示。</li>
+<li>如果二进制（流b小于0x10000，也就是十进制的0到65535之内，则直接使用两字节表示。</li>
 <li>如果二进制流b大于等于0x10000，将b-0x10000的结果中的前 10 位作为高位和0xD800进行逻辑或操作，将后10 bit作为低位和0xDC00做逻辑或操作，这样组成的4个字节就构成了b的编码。</li>
 </ul>
 <p>举个例子。假设要算（U+2A6A5，四个繁体字龙）在UTF-16下的值，因为它超过 U+FFFF，所以 2A6A5-10000=0x1A6A5=。</p>
@@ -839,9 +839,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS/" rel="tag"># iOS</a>
-          
             <a href="/tags/安全/" rel="tag"># 安全</a>
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
           
             <a href="/tags/加解密/" rel="tag"># 加解密</a>
           
@@ -977,7 +977,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -988,7 +988,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -999,7 +999,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
