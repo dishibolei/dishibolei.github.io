@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://dishibolei.github.io/"/>
-  <updated>2017-10-24T08:43:06.000Z</updated>
+  <updated>2017-10-25T07:27:51.000Z</updated>
   <id>https://dishibolei.github.io/</id>
   
   <author>
@@ -14,6 +14,77 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iSee使用说明</title>
+    <link href="https://dishibolei.github.io/2017/10/25/ios-isee/"/>
+    <id>https://dishibolei.github.io/2017/10/25/ios-isee/</id>
+    <published>2017-10-25T03:56:40.000Z</published>
+    <updated>2017-10-25T07:27:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<blockquote>
+<p>导读<br>为了方便对linkMap做解析，参考zyangSir的iSee工程，做了linkMap文件解析的工具，欢迎使用。</p>
+</blockquote>
+</blockquote>
+<a id="more"></a>
+<h1 id="ios包大小分析工具iSee"><a href="#ios包大小分析工具iSee" class="headerlink" title="ios包大小分析工具iSee"></a>ios包大小分析工具iSee</h1><p><a href="https://github.com/dishibolei/iSee" target="_blank" rel="external">github地址</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>iSee是一款分析iOS可执行文件成分的工具，通过加载XCode在项目编译期间产生的linkMap文件，能够输出项目中每个类(包括第三方静态库)，在最终可执行文件中占用的长度信息。本工具根据zyangSir的代码做了部分修改。主要功能有：</p>
+<ol>
+<li>各个可执行文件占用大小</li>
+<li>可执行文件中，各个段占用的大小（包括方法+常量字符串等）</li>
+<li>未使用到的类</li>
+<li>未使用到的方法</li>
+</ol>
+<p><img src="/2017/10/25/ios-isee/iSee_detail.png" alt="iSee_detai"></p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>建议使用真机生成的文件测试，目前看对arm64架构支持最好。优先使用arm64相关文件检测。</p>
+<h3 id="导出生成linkmap文件"><a href="#导出生成linkmap文件" class="headerlink" title="导出生成linkmap文件"></a>导出生成linkmap文件</h3><ol>
+<li><p>在XCode编译选项中打开”WriteLinkMapFile”<br> <img src="/2017/10/25/ios-isee/./iSee_step1.png" alt="image"> </p>
+</li>
+<li><p>选择好真机/模拟器,Debug/Release。编译项目,进入项目的Derived Data目录<br> <img src="/2017/10/25/ios-isee/./iSee_step2.png" alt="image"> </p>
+</li>
+<li><p>依次进入Build/Intermediates/项目名.build/  目录, 找到相应模式下的编译产物文件夹<br><img src="/2017/10/25/ios-isee/./iSee_step3.png" alt="image"> </p>
+</li>
+<li><p>可以看到一个名为 项目名-LinkMap-normal-CPU架构.txt的文件，在iSee中点击linkMap文件按钮，导入这个文件 </p>
+</li>
+</ol>
+<h3 id="导出生成的可执行文件"><a href="#导出生成的可执行文件" class="headerlink" title="导出生成的可执行文件"></a>导出生成的可执行文件</h3><ol>
+<li><p>在上一步的Derived Data目录下,</p>
+<p><img src="/2017/10/25/ios-isee/./iSee_step5.png" alt="image"> </p>
+<p>看到.app结尾的文件，邮件显示包内容，找到和工程名称一样的一个可执行文件，把这个文件copy到相关目录<br><img src="/2017/10/25/ios-isee/./iSee_step5.png" alt="image"></p>
+</li>
+<li><p>在iSee中点击可执行文件，导入刚才的文件</p>
+</li>
+<li>之后程序会自动执行分析。</li>
+</ol>
+<h2 id="简单说明"><a href="#简单说明" class="headerlink" title="简单说明"></a>简单说明</h2><ol>
+<li>现在对arm64支持比较好，所以建议用这个格式测试。</li>
+<li>对于未使用方法和未使用类，使用otool工具来做辅助分析</li>
+<li>未使用方法和未使用类，有误报可能，主要误报的是一些实现协议的类，这一部分是动态使用的，所以静态分析不出来。</li>
+</ol>
+<p>详细技术细节可以参考我的博客：<br><code>https://dishibolei.github.io/</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;导读&lt;br&gt;为了方便对linkMap做解析，参考zyangSir的iSee工程，做了linkMap文件解析的工具，欢迎使用。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="优化" scheme="https://dishibolei.github.io/categories/%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="iOS" scheme="https://dishibolei.github.io/tags/iOS/"/>
+    
+      <category term="包大小" scheme="https://dishibolei.github.io/tags/%E5%8C%85%E5%A4%A7%E5%B0%8F/"/>
+    
+      <category term="linkmap解析" scheme="https://dishibolei.github.io/tags/linkmap%E8%A7%A3%E6%9E%90/"/>
+    
+  </entry>
   
   <entry>
     <title>iOS优化-包大小分析-linkMap</title>

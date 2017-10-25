@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS,包大小,linkmap解析," />
 
 
 
@@ -92,15 +92,24 @@
 
 
 
-<meta name="description" content="金融互联网下的小码农。目前专注于IOS客户端安全、性能、架构和react-native相关的技术。2017.5月开始写博客，分享工作中的一些心得。只准备写原创文章，文笔逻辑不好，慢慢改正。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="萝卜的空间">
-<meta property="og:url" content="https://dishibolei.github.io/tags/linkmap/index.html">
+<meta name="description" content="导读为了方便对linkMap做解析，参考zyangSir的iSee工程，做了linkMap文件解析的工具，欢迎使用。">
+<meta name="keywords" content="iOS,包大小,linkmap解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iSee使用说明">
+<meta property="og:url" content="https://dishibolei.github.io/2017/10/25/ios-isee/index.html">
 <meta property="og:site_name" content="萝卜的空间">
-<meta property="og:description" content="金融互联网下的小码农。目前专注于IOS客户端安全、性能、架构和react-native相关的技术。2017.5月开始写博客，分享工作中的一些心得。只准备写原创文章，文笔逻辑不好，慢慢改正。">
+<meta property="og:description" content="导读为了方便对linkMap做解析，参考zyangSir的iSee工程，做了linkMap文件解析的工具，欢迎使用。">
+<meta property="og:image" content="https://dishibolei.github.io/2017/10/25/ios-isee/iSee_detail.png">
+<meta property="og:image" content="https://dishibolei.github.io/2017/10/25/ios-isee/iSee_step1.png">
+<meta property="og:image" content="https://dishibolei.github.io/2017/10/25/ios-isee/iSee_step2.png">
+<meta property="og:image" content="https://dishibolei.github.io/2017/10/25/ios-isee/iSee_step3.png">
+<meta property="og:image" content="https://dishibolei.github.io/2017/10/25/ios-isee/iSee_step5.png">
+<meta property="og:image" content="https://dishibolei.github.io/2017/10/25/ios-isee/iSee_step5.png">
+<meta property="og:updated_time" content="2017-10-25T07:27:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="萝卜的空间">
-<meta name="twitter:description" content="金融互联网下的小码农。目前专注于IOS客户端安全、性能、架构和react-native相关的技术。2017.5月开始写博客，分享工作中的一些心得。只准备写原创文章，文笔逻辑不好，慢慢改正。">
+<meta name="twitter:title" content="iSee使用说明">
+<meta name="twitter:description" content="导读为了方便对linkMap做解析，参考zyangSir的iSee工程，做了linkMap文件解析的工具，欢迎使用。">
+<meta name="twitter:image" content="https://dishibolei.github.io/2017/10/25/ios-isee/iSee_detail.png">
 
 
 
@@ -128,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="https://dishibolei.github.io/tags/linkmap/"/>
+  <link rel="canonical" href="https://dishibolei.github.io/2017/10/25/ios-isee/"/>
 
 
 
 
 
-  <title>标签: linkmap | 萝卜的空间</title>
+  <title>iSee使用说明 | 萝卜的空间</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -169,7 +178,7 @@
     
   
 
-  <div class="container sidebar-position-right  ">
+  <div class="container sidebar-position-right page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -297,44 +306,253 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>linkmap<small>标签</small>
-      </h1>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://dishibolei.github.io/2017/10/25/ios-isee/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bolei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜的空间">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iSee使用说明</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-25T11:56:40+08:00">
+                2017-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/优化/" itemprop="url" rel="index">
+                    <span itemprop="name">优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <blockquote>
+<blockquote>
+<p>导读<br>为了方便对linkMap做解析，参考zyangSir的iSee工程，做了linkMap文件解析的工具，欢迎使用。</p>
+</blockquote>
+</blockquote>
+<a id="more"></a>
+<h1 id="ios包大小分析工具iSee"><a href="#ios包大小分析工具iSee" class="headerlink" title="ios包大小分析工具iSee"></a>ios包大小分析工具iSee</h1><p><a href="https://github.com/dishibolei/iSee" target="_blank" rel="external">github地址</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>iSee是一款分析iOS可执行文件成分的工具，通过加载XCode在项目编译期间产生的linkMap文件，能够输出项目中每个类(包括第三方静态库)，在最终可执行文件中占用的长度信息。本工具根据zyangSir的代码做了部分修改。主要功能有：</p>
+<ol>
+<li>各个可执行文件占用大小</li>
+<li>可执行文件中，各个段占用的大小（包括方法+常量字符串等）</li>
+<li>未使用到的类</li>
+<li>未使用到的方法</li>
+</ol>
+<p><img src="/2017/10/25/ios-isee/iSee_detail.png" alt="iSee_detai"></p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>建议使用真机生成的文件测试，目前看对arm64架构支持最好。优先使用arm64相关文件检测。</p>
+<h3 id="导出生成linkmap文件"><a href="#导出生成linkmap文件" class="headerlink" title="导出生成linkmap文件"></a>导出生成linkmap文件</h3><ol>
+<li><p>在XCode编译选项中打开”WriteLinkMapFile”<br> <img src="/2017/10/25/ios-isee/./iSee_step1.png" alt="image"> </p>
+</li>
+<li><p>选择好真机/模拟器,Debug/Release。编译项目,进入项目的Derived Data目录<br> <img src="/2017/10/25/ios-isee/./iSee_step2.png" alt="image"> </p>
+</li>
+<li><p>依次进入Build/Intermediates/项目名.build/  目录, 找到相应模式下的编译产物文件夹<br><img src="/2017/10/25/ios-isee/./iSee_step3.png" alt="image"> </p>
+</li>
+<li><p>可以看到一个名为 项目名-LinkMap-normal-CPU架构.txt的文件，在iSee中点击linkMap文件按钮，导入这个文件 </p>
+</li>
+</ol>
+<h3 id="导出生成的可执行文件"><a href="#导出生成的可执行文件" class="headerlink" title="导出生成的可执行文件"></a>导出生成的可执行文件</h3><ol>
+<li><p>在上一步的Derived Data目录下,</p>
+<p><img src="/2017/10/25/ios-isee/./iSee_step5.png" alt="image"> </p>
+<p>看到.app结尾的文件，邮件显示包内容，找到和工程名称一样的一个可执行文件，把这个文件copy到相关目录<br><img src="/2017/10/25/ios-isee/./iSee_step5.png" alt="image"></p>
+</li>
+<li><p>在iSee中点击可执行文件，导入刚才的文件</p>
+</li>
+<li>之后程序会自动执行分析。</li>
+</ol>
+<h2 id="简单说明"><a href="#简单说明" class="headerlink" title="简单说明"></a>简单说明</h2><ol>
+<li>现在对arm64支持比较好，所以建议用这个格式测试。</li>
+<li>对于未使用方法和未使用类，使用otool工具来做辅助分析</li>
+<li>未使用方法和未使用类，有误报可能，主要误报的是一些实现协议的类，这一部分是动态使用的，所以静态分析不出来。</li>
+</ol>
+<p>详细技术细节可以参考我的博客：<br><code>https://dishibolei.github.io/</code></p>
 
-      <h2 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/08/17/ios-linkmap/" itemprop="url">
-              
-                <span itemprop="name">iOS优化-包大小分析-linkMap</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/upload/wechat_pay.jpeg" alt="bolei WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-17T11:56:40+08:00"
-              content="2017-08-17" >
-          08-17
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/包大小/" rel="tag"># 包大小</a>
+          
+            <a href="/tags/linkmap解析/" rel="tag"># linkmap解析</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/17/ios-linkmap/" rel="next" title="iOS优化-包大小分析-linkMap">
+                <i class="fa fa-chevron-left"></i> iOS优化-包大小分析-linkMap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -342,6 +560,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYyNy81MTk4"></div>
+    
+  </div>
+
 
         </div>
         
@@ -361,8 +585,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -456,6 +689,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ios包大小分析工具iSee"><span class="nav-number">1.</span> <span class="nav-text">ios包大小分析工具iSee</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">1.2.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导出生成linkmap文件"><span class="nav-number">1.2.1.</span> <span class="nav-text">导出生成linkmap文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出生成的可执行文件"><span class="nav-number">1.2.2.</span> <span class="nav-text">导出生成的可执行文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单说明"><span class="nav-number">1.3.</span> <span class="nav-text">简单说明</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -576,6 +825,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
@@ -610,6 +863,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
